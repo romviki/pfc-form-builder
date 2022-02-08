@@ -3,7 +3,7 @@ import { Box } from '@mui/system';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-const Notfound = () => {
+function Notfound() {
   const navigate = useNavigate();
   const [countDown, setCountDown] = useState(5);
 
@@ -34,6 +34,6 @@ const Notfound = () => {
       </Box>
     </Grid>
   );
-};
+}
 
 export default Notfound;
