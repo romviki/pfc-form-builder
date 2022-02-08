@@ -78,8 +78,20 @@ function CreateForm() {
       <Grid container justifyContent='space-between'>
         <Typography variant='h2'>Create Form</Typography>
         <Grid item alignSelf='center'>
-          <Button variant='contained' onClick={onSave}>
+          <Button variant='contained' onClick={onSave} sx={{ marginRight: 2 }}>
             Save Form
+          </Button>
+
+          <Button
+            variant='outlined'
+            onClick={() => {
+              const confirmed = window.confirm(
+                'Are you sure to discard the form?'
+              );
+              confirmed && navigate('/');
+            }}
+          >
+            Cancel
           </Button>
         </Grid>
       </Grid>
