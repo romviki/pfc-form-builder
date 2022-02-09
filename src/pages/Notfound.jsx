@@ -22,15 +22,15 @@ function Notfound() {
   });
 
   return (
-    <Grid container direction='column' justifyContent='center'>
-      <Typography variant='h2' marginTop={12} textAlign='center'>
+    <Grid container direction="column" justifyContent="center">
+      <Typography variant="h2" marginTop={12} textAlign="center">
         404 Not Found
       </Typography>
-      <Typography variant='h4' marginTop={4} textAlign='center'>
+      <Typography variant="h4" marginTop={4} textAlign="center">
         Redirect in {countDown} seconds
       </Typography>
-      <Box marginTop={4} textAlign='center'>
-        <Link to='/'>Back to Homepage</Link>
+      <Box marginTop={4} textAlign="center">
+        <Link to="/">Back to Homepage</Link>
       </Box>
     </Grid>
   );

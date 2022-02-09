@@ -3,29 +3,35 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
+  Grid,
   Modal,
   TextField,
   Typography,
-  Grid,
 } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import { Box } from '@mui/system';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { GlobalContext } from '../context/GlobalContext';
 
-const initialForm = {
-  id: uuidv4(),
-  name: '',
-  required: false,
-  minLength: '',
-  maxLength: '',
-};
+function InputFieldModal({ title, type, addField }) {
+  const initialForm = {
+    id: uuidv4(),
+    type: type,
+    name: '',
+    required: false,
+    minLength: '',
+    maxLength: '',
+    errorMessage: '',
+  };
 
-function InputFieldModal({ title, addField }) {
   const [open, setOpen] = useState(false);
   const [createInputForm, setCreateInputForm] = useState(initialForm);
 
-  const { name, required, minLength, maxLength } = createInputForm;
+  const { dispatch } = useContext(GlobalContext);
+
+  const { name, required, minLength, maxLength, errorMessage } =
+    createInputForm;
 
   const onChange = e => {
     setCreateInputForm(prev => ({
@@ -43,30 +49,42 @@ function InputFieldModal({ title, addField }) {
 
   const onSubmit = e => {
     e.preventDefault();
+    if (name) {
+      const cleanedInputField = cleanUpInputField();
+      addField(cleanedInputField);
+
+      setCreateInputForm(initialForm);
+
+      setOpen(false);
+      return;
+    }
+
+    dispatch({ type: 'SET_ERROR', payload: 'Input must have a name' });
+  };
+
+  const cleanUpInputField = () => {
     const createInputFormCopy = { ...createInputForm };
     !minLength && delete createInputFormCopy.minLength;
     !maxLength && delete createInputFormCopy.maxLength;
-
-    addField(createInputFormCopy);
-
-    setOpen(false);
+    !errorMessage && delete createInputFormCopy.errorMessage;
+    return createInputFormCopy;
   };
 
   return (
-    <>
-      <Button variant='contained' onClick={() => setOpen(true)}>
-        TextField
+    <Box sx={{ marginBottom: 2 }}>
+      <Button variant="contained" onClick={() => setOpen(true)}>
+        {title}
       </Button>
       <Modal
         open={open}
         onClose={() => setOpen(false)}
-        aria-labelledby='modal-modal-title'
-        aria-describedby='modal-modal-description'
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
       >
         <Box
           sx={{
             position: 'absolute',
-            top: '30%',
+            top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
             bgcolor: 'white',
@@ -77,23 +95,23 @@ function InputFieldModal({ title, addField }) {
             borderColor: 'grey.500',
           }}
         >
-          <Grid container justifyContent='space-between'>
+          <Grid container justifyContent="space-between">
             <Typography
-              id='modal-modal-title'
-              variant='h6'
-              component='h2'
+              id="modal-modal-title"
+              variant="h6"
+              component="h2"
               marginBottom={2}
             >
               Create {title}
             </Typography>
             <Box>
               <IconButton
-                size='small'
-                aria-label='close'
-                color='inherit'
+                size="small"
+                aria-label="close"
+                color="inherit"
                 onClick={() => setOpen(false)}
               >
-                <CloseIcon fontSize='small' />
+                <CloseIcon fontSize="small" />
               </IconButton>
             </Box>
           </Grid>
@@ -109,9 +127,9 @@ function InputFieldModal({ title, addField }) {
             onSubmit={onSubmit}
           >
             <TextField
-              id='name'
-              label='Name - Used As Text Field Label'
-              variant='outlined'
+              id="name"
+              label="Name - Used As Text Field Label"
+              variant="outlined"
               value={name}
               sx={{
                 marginBottom: 2,
@@ -122,23 +140,23 @@ function InputFieldModal({ title, addField }) {
             <FormControlLabel
               control={
                 <Checkbox
-                  id='required'
+                  id="required"
                   onChange={onChecked}
                   checked={required}
                 />
               }
-              label='Required?'
+              label="Required?"
               sx={{
                 marginBottom: 2,
               }}
             />
 
             <TextField
-              id='minLength'
-              label='Min Length'
+              id="minLength"
+              label="Min Length"
               inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
               value={minLength}
-              type='number'
+              type="number"
               sx={{
                 marginBottom: 2,
               }}
@@ -146,11 +164,22 @@ function InputFieldModal({ title, addField }) {
             />
 
             <TextField
-              id='maxLength'
-              label='Max Length'
+              id="maxLength"
+              label="Max Length"
               inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
               value={maxLength}
-              type='number'
+              type="number"
+              sx={{
+                marginBottom: 2,
+              }}
+              onChange={onChange}
+            />
+
+            <TextField
+              id="errorMessage"
+              label="Error Message"
+              value={errorMessage}
+              type="text"
               sx={{
                 marginBottom: 2,
               }}
@@ -163,12 +192,12 @@ function InputFieldModal({ title, addField }) {
                 justifyContent: 'space-evenly',
               }}
             >
-              <Button variant='contained' type='submit'>
+              <Button variant="contained" type="submit">
                 Submit
               </Button>
               <Button
-                variant='outlined'
-                type='reset'
+                variant="outlined"
+                type="reset"
                 onClick={() => setCreateInputForm(initialForm)}
               >
                 Clear
@@ -177,7 +206,7 @@ function InputFieldModal({ title, addField }) {
           </Box>
         </Box>
       </Modal>
-    </>
+    </Box>
   );
 }
 

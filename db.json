@@ -1,0 +1,32 @@
+{
+  "forms": [
+    {
+      "id": "a4fc31a9-6865-4f01-9e13-1927e2522a0c",
+      "name": "First Form",
+      "fields": [
+        {
+          "id": "620ea059-f313-458c-87b4-eefd203ca2df",
+          "type": "text",
+          "name": "Text 1",
+          "required": true,
+          "errorMessage": ""
+        },
+        {
+          "id": "55533768-ee09-41f9-9764-b35ec95dbf4e",
+          "type": "text",
+          "name": "Text 2",
+          "required": false,
+          "minLength": "10",
+          "errorMessage": ""
+        },
+        {
+          "id": "b00b4607-f48f-4a06-b4d9-d4628785963d",
+          "type": "textarea",
+          "name": "Textarea 1",
+          "required": true,
+          "errorMessage": "It's required"
+        }
+      ]
+    }
+  ]
+}

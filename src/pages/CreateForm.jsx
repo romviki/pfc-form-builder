@@ -1,31 +1,29 @@
-import CloseIcon from '@mui/icons-material/Close';
-import {
-  Alert,
-  Button,
-  Grid,
-  Snackbar,
-  TextField,
-  Typography,
-} from '@mui/material';
-import IconButton from '@mui/material/IconButton';
-import { Box } from '@mui/system';
-import { useState } from 'react';
+import { Button, Grid, TextField, Typography } from '@mui/material';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { formKey } from '../app_constants';
+import FormCanvas from '../components/FormCanvas';
+import InputFieldList from '../components/InputFieldList';
 import InputFieldModal from '../components/InputFieldModal';
-import useLocalStorage from '../hooks/useLocalStorage';
+import { FormsContext } from '../context/FormsContext';
+import { GlobalContext } from '../context/GlobalContext';
+import useFetch from '../hooks/useFetch';
 
 function CreateForm() {
-  const [forms, setForms] = useLocalStorage(formKey, []);
+  const { dispatch: dispatchError } = useContext(GlobalContext);
+  const { dispatch: dispatchForms } = useContext(FormsContext);
+
+  const { executeFetch } = useFetch('/api/forms', {
+    method: 'POST',
+  });
+
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({
     id: uuidv4(),
     name: '',
     fields: [],
   });
-  const [showAlert, setShowAlert] = useState(false);
-
-  const navigate = useNavigate();
 
   const { name } = form;
 
@@ -36,18 +34,18 @@ function CreateForm() {
     }));
   };
 
-  const onSave = () => {
-    if (form.name) {
-      setForms([...forms, form]);
+  const onSave = async () => {
+    if (name) {
+      await executeFetch(form);
+      dispatchForms({ type: 'ADD_FORM', payload: form });
       navigate('/');
       return;
     }
 
-    setShowAlert(true);
-  };
-
-  const closeToast = () => {
-    setShowAlert(false);
+    dispatchError({
+      type: 'SET_ERROR',
+      payload: 'Form has to have a name before save',
+    });
   };
 
   const onChange = e => {
@@ -59,31 +57,15 @@ function CreateForm() {
 
   return (
     <>
-      <Snackbar open={showAlert} autoHideDuration={3000} onClose={closeToast}>
-        <Box>
-          <Alert severity='error' sx={{ width: '100%' }}>
-            Form has to have a name before save!
-            <IconButton
-              size='small'
-              aria-label='close'
-              color='inherit'
-              onClick={closeToast}
-            >
-              <CloseIcon fontSize='small' />
-            </IconButton>
-          </Alert>
-        </Box>
-      </Snackbar>
-
-      <Grid container justifyContent='space-between'>
-        <Typography variant='h2'>Create Form</Typography>
-        <Grid item alignSelf='center'>
-          <Button variant='contained' onClick={onSave} sx={{ marginRight: 2 }}>
+      <Grid container justifyContent="space-between">
+        <Typography variant="h2">Create Form</Typography>
+        <Grid item alignSelf="center">
+          <Button variant="contained" onClick={onSave} sx={{ marginRight: 2 }}>
             Save Form
           </Button>
 
           <Button
-            variant='outlined'
+            variant="outlined"
             onClick={() => {
               const confirmed = window.confirm(
                 'Are you sure to discard the form?'
@@ -105,24 +87,18 @@ function CreateForm() {
           minHeight: '85vh',
         }}
       >
-        <Grid item xs={2} sx={{ borderRight: 1, borderColor: 'grey.500' }}>
-          <Typography variant='h6' marginBottom={2}>
-            Inputs
-          </Typography>
+        <InputFieldList addField={addField} />
 
-          <InputFieldModal title='TextField' addField={addField} />
-        </Grid>
-        <Grid item xs={9} container direction='column'>
-          <Typography variant='h6' marginBottom={2}>
-            Canvas
-          </Typography>
-
+        <Grid item xs={9} container direction="column">
           <TextField
-            label='Form Name'
-            id='name'
+            label="Form Name"
+            id="name"
             value={name}
             onChange={onChange}
+            sx={{ marginBottom: 2 }}
           />
+
+          <FormCanvas fields={form.fields} />
         </Grid>
       </Grid>
     </>
