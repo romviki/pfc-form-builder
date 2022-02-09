@@ -27,6 +27,27 @@
           "errorMessage": "It's required"
         }
       ]
+    },
+    {
+      "id": "5c5d7604-5762-410f-9e29-389a48460e18",
+      "name": "Demo",
+      "fields": [
+        {
+          "id": "7d4324cd-9b9e-4b51-b5ee-b257427ae0a9",
+          "type": "text",
+          "name": "Text 1",
+          "required": true,
+          "errorMessage": "it's required"
+        },
+        {
+          "id": "54f1a2db-e964-4b70-9472-ce19a852ecce",
+          "type": "textarea",
+          "name": "Hello World",
+          "required": false,
+          "minLength": "10",
+          "maxLength": "100"
+        }
+      ]
     }
   ]
 }

@@ -96,6 +96,7 @@ function CreateForm() {
             value={name}
             onChange={onChange}
             sx={{ marginBottom: 2 }}
+            required
           />
 
           <FormCanvas fields={form.fields} />
