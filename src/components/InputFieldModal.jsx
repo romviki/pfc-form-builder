@@ -128,7 +128,7 @@ function InputFieldModal({ title, type, addField }) {
           >
             <TextField
               id="name"
-              label="Name - Used As Text Field Label"
+              label="Name - Used As Input Label"
               variant="outlined"
               value={name}
               sx={{

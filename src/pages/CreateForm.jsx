@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import FormCanvas from '../components/FormCanvas';
 import InputFieldList from '../components/InputFieldList';
-import InputFieldModal from '../components/InputFieldModal';
 import { FormsContext } from '../context/FormsContext';
 import { GlobalContext } from '../context/GlobalContext';
 import useFetch from '../hooks/useFetch';
