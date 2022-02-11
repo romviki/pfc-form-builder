@@ -48,6 +48,37 @@
           "maxLength": "100"
         }
       ]
+    },
+    {
+      "id": "22ee2443-5ffc-4904-bef6-ba3fdee9acd1",
+      "name": "testsetsetes",
+      "fields": [
+        {
+          "id": "6172ed33-a906-41c9-86ec-a2067fe890f9",
+          "type": "datepicker",
+          "name": "testse",
+          "validation": {
+            "required": false,
+            "min": "",
+            "max": "",
+            "beforeDate": null,
+            "afterDate": null
+          }
+        },
+        {
+          "id": "52756b9d-8ca2-444a-8dd1-6ac152c324e1",
+          "type": "datepicker",
+          "name": "testestsetestt",
+          "validation": {
+            "required": false,
+            "min": "",
+            "max": "",
+            "beforeDate": null,
+            "afterDate": null,
+            "customErrorMessage": "setesetstes"
+          }
+        }
+      ]
     }
   ]
 }

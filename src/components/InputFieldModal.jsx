@@ -1,7 +1,9 @@
 import CloseIcon from '@mui/icons-material/Close';
+import DatePicker from '@mui/lab/DatePicker';
 import {
   Button,
   Checkbox,
+  FormControl,
   FormControlLabel,
   Grid,
   Modal,
@@ -17,34 +19,78 @@ import { GlobalContext } from '../context/GlobalContext';
 function InputFieldModal({ title, type, addField }) {
   const initialForm = {
     id: uuidv4(),
-    type: type,
+    type,
     name: '',
-    required: false,
-    minLength: '',
-    maxLength: '',
-    errorMessage: '',
+    validation: {
+      required: false,
+      min: '',
+      max: '',
+      minLength: '',
+      maxLength: '',
+      beforeDate: null,
+      afterDate: null,
+      customErrorMessage: '',
+    },
   };
 
   const [open, setOpen] = useState(false);
   const [createInputForm, setCreateInputForm] = useState(initialForm);
 
-  const { dispatch } = useContext(GlobalContext);
+  const { error, dispatch } = useContext(GlobalContext);
 
-  const { name, required, minLength, maxLength, errorMessage } =
-    createInputForm;
+  const {
+    name,
+    validation: {
+      required,
+      min,
+      max,
+      minLength,
+      maxLength,
+      afterDate,
+      beforeDate,
+      customErrorMessage,
+    },
+  } = createInputForm;
 
-  const onChange = e => {
+  const onInputNameChange = e => {
     setCreateInputForm(prev => ({
       ...prev,
-      [e.target.id]: e.target.value,
+      name: e.target.value,
     }));
   };
 
-  const onChecked = e => {
+  const onValidationChange = e => {
     setCreateInputForm(prev => ({
       ...prev,
-      required: e.target.checked,
+      validation: {
+        ...prev.validation,
+        [e.target.id]: e.target.value,
+      },
     }));
+  };
+
+  const onRequiredCheck = e => {
+    setCreateInputForm(prev => ({
+      ...prev,
+      validation: {
+        ...prev.validation,
+        required: e.target.checked,
+      },
+    }));
+  };
+
+  const onDateChange = (date, dateType) => {
+    setCreateInputForm(prev => ({
+      ...prev,
+      validation: {
+        ...prev.validation,
+        [dateType]: date,
+      },
+    }));
+  };
+
+  const renderDate = params => {
+    return <TextField {...params} />;
   };
 
   const onSubmit = e => {
@@ -53,8 +99,9 @@ function InputFieldModal({ title, type, addField }) {
       const cleanedInputField = cleanUpInputField();
       addField(cleanedInputField);
 
-      setCreateInputForm(initialForm);
+      console.log(createInputForm);
 
+      setCreateInputForm(initialForm);
       setOpen(false);
       return;
     }
@@ -64,9 +111,10 @@ function InputFieldModal({ title, type, addField }) {
 
   const cleanUpInputField = () => {
     const createInputFormCopy = { ...createInputForm };
-    !minLength && delete createInputFormCopy.minLength;
-    !maxLength && delete createInputFormCopy.maxLength;
-    !errorMessage && delete createInputFormCopy.errorMessage;
+    !minLength && delete createInputFormCopy.validation.minLength;
+    !maxLength && delete createInputFormCopy.validation.maxLength;
+    !customErrorMessage &&
+      delete createInputFormCopy.validation.customErrorMessage;
     return createInputFormCopy;
   };
 
@@ -75,6 +123,7 @@ function InputFieldModal({ title, type, addField }) {
       <Button variant="contained" onClick={() => setOpen(true)}>
         {title}
       </Button>
+
       <Modal
         open={open}
         onClose={() => setOpen(false)}
@@ -117,31 +166,31 @@ function InputFieldModal({ title, type, addField }) {
           </Grid>
 
           <Box
-            component={'form'}
             sx={{
               display: 'flex',
               flexDirection: 'column',
               width: '30vw',
               justifyContent: 'space-between',
             }}
-            onSubmit={onSubmit}
           >
             <TextField
               id="name"
-              label="Name - Used As Input Label"
+              label="Input Name"
               variant="outlined"
               value={name}
+              error={!!error}
+              onChange={onInputNameChange}
+              required
               sx={{
                 marginBottom: 2,
               }}
-              onChange={onChange}
             />
 
             <FormControlLabel
               control={
                 <Checkbox
                   id="required"
-                  onChange={onChecked}
+                  onChange={onRequiredCheck}
                   checked={required}
                 />
               }
@@ -157,10 +206,10 @@ function InputFieldModal({ title, type, addField }) {
               inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
               value={minLength}
               type="number"
+              onChange={onValidationChange}
               sx={{
                 marginBottom: 2,
               }}
-              onChange={onChange}
             />
 
             <TextField
@@ -169,21 +218,74 @@ function InputFieldModal({ title, type, addField }) {
               inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
               value={maxLength}
               type="number"
+              onChange={onValidationChange}
               sx={{
                 marginBottom: 2,
               }}
-              onChange={onChange}
             />
 
             <TextField
-              id="errorMessage"
-              label="Error Message"
-              value={errorMessage}
-              type="text"
+              id="min"
+              label="Minimum Number"
+              inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+              value={min}
+              type="number"
+              onChange={onValidationChange}
               sx={{
                 marginBottom: 2,
               }}
-              onChange={onChange}
+            />
+
+            <TextField
+              id="max"
+              label="Maximum Number"
+              inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+              value={max}
+              type="number"
+              onChange={onValidationChange}
+              sx={{
+                marginBottom: 2,
+              }}
+            />
+
+            <FormControl
+              sx={{
+                marginBottom: 2,
+              }}
+            >
+              <DatePicker
+                label="Must Before"
+                value={beforeDate}
+                onChange={newVal => onDateChange(newVal, 'beforeDate')}
+                renderInput={params => renderDate(params)}
+              />
+            </FormControl>
+
+            <FormControl
+              sx={{
+                marginBottom: 2,
+              }}
+            >
+              <DatePicker
+                label="Must After"
+                value={afterDate}
+                onChange={newVal => onDateChange(newVal, 'afterDate')}
+                renderInput={params => renderDate(params)}
+                sx={{
+                  marginBottom: 2,
+                }}
+              />
+            </FormControl>
+
+            <TextField
+              id="customErrorMessage"
+              label="Error Message"
+              value={customErrorMessage}
+              type="text"
+              onChange={onValidationChange}
+              sx={{
+                marginBottom: 2,
+              }}
             />
 
             <Box
@@ -192,7 +294,7 @@ function InputFieldModal({ title, type, addField }) {
                 justifyContent: 'space-evenly',
               }}
             >
-              <Button variant="contained" type="submit">
+              <Button onClick={onSubmit} variant="contained" type="submit">
                 Submit
               </Button>
               <Button

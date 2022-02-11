@@ -9,7 +9,7 @@ import { GlobalContext } from '../context/GlobalContext';
 import useFetch from '../hooks/useFetch';
 
 function CreateForm() {
-  const { dispatch: dispatchError } = useContext(GlobalContext);
+  const { error, dispatch: dispatchError } = useContext(GlobalContext);
   const { dispatch: dispatchForms } = useContext(FormsContext);
 
   const { executeFetch } = useFetch('/api/forms', {
@@ -58,6 +58,7 @@ function CreateForm() {
     <>
       <Grid container justifyContent="space-between">
         <Typography variant="h2">Create Form</Typography>
+
         <Grid item alignSelf="center">
           <Button variant="contained" onClick={onSave} sx={{ marginRight: 2 }}>
             Save Form
@@ -96,6 +97,7 @@ function CreateForm() {
             onChange={onChange}
             sx={{ marginBottom: 2 }}
             required
+            error={!!error}
           />
 
           <FormCanvas fields={form.fields} />

@@ -8,11 +8,26 @@ function InputFieldList({ addField }) {
         Inputs
       </Typography>
 
-      <InputFieldModal title="TextField" type="text" addField={addField} />
-
-      <InputFieldModal title="Textarea" type="textarea" addField={addField} />
-
       {/* List of Inputs */}
+      <InputFieldModal title="Text Field" type="text" addField={addField} />
+
+      <InputFieldModal title="Text Area" type="textarea" addField={addField} />
+
+      <InputFieldModal title="Checkbox" type="checkbox" addField={addField} />
+
+      <InputFieldModal
+        title="Radio buttons"
+        type="radioButtons"
+        addField={addField}
+      />
+
+      <InputFieldModal
+        title="Date picker"
+        type="datepicker"
+        addField={addField}
+      />
+
+      <InputFieldModal title="Dropdown" type="dropdown" addField={addField} />
     </Grid>
   );
 }
