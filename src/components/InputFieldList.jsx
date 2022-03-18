@@ -1,9 +1,11 @@
-import { Grid, Typography } from '@mui/material';
-import InputFieldModal from './InputFieldModal';
+import { Typography } from '@mui/material';
+import InputFieldModal from './CustomInputFieldModals/InputFieldModal';
+import CheckboxModal from './CustomInputFieldModals/CheckboxModal';
+import DropdownModal from './CustomInputFieldModals/DropdownModal';
 
 function InputFieldList({ addField }) {
   return (
-    <Grid item xs={2} sx={{ borderRight: 1, borderColor: 'grey.500' }}>
+    <>
       <Typography variant="h6" marginBottom={2}>
         Inputs
       </Typography>
@@ -13,7 +15,7 @@ function InputFieldList({ addField }) {
 
       <InputFieldModal title="Text Area" type="textarea" addField={addField} />
 
-      <InputFieldModal title="Checkbox" type="checkbox" addField={addField} />
+      <CheckboxModal title="Checkbox" type="checkbox" addField={addField} />
 
       <InputFieldModal
         title="Radio buttons"
@@ -27,8 +29,8 @@ function InputFieldList({ addField }) {
         addField={addField}
       />
 
-      <InputFieldModal title="Dropdown" type="dropdown" addField={addField} />
-    </Grid>
+      <DropdownModal title="Dropdown" type="dropdown" addField={addField} />
+    </>
   );
 }
 

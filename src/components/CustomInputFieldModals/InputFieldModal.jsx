@@ -14,7 +14,7 @@ import IconButton from '@mui/material/IconButton';
 import { Box } from '@mui/system';
 import { useContext, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { GlobalContext } from '../context/GlobalContext';
+import { GlobalContext } from '../../context/GlobalContext';
 
 function InputFieldModal({ title, type, addField }) {
   const initialForm = {
@@ -139,20 +139,11 @@ function InputFieldModal({ title, type, addField }) {
             bgcolor: 'white',
             p: 4,
             zIndex: 10,
-            border: '1px solid',
+            border: '1px solid gray',
             borderRadius: '4px',
-            borderColor: 'grey.500',
           }}
         >
-          <Grid container justifyContent="space-between">
-            <Typography
-              id="modal-modal-title"
-              variant="h6"
-              component="h2"
-              marginBottom={2}
-            >
-              Create {title}
-            </Typography>
+          <Grid container justifyContent="flex-start">
             <Box>
               <IconButton
                 size="small"
@@ -163,6 +154,14 @@ function InputFieldModal({ title, type, addField }) {
                 <CloseIcon fontSize="small" />
               </IconButton>
             </Box>
+            <Typography
+              id="modal-modal-title"
+              variant="h6"
+              component="h2"
+              marginBottom={2}
+            >
+              Create {title}
+            </Typography>
           </Grid>
 
           <Box
@@ -279,7 +278,7 @@ function InputFieldModal({ title, type, addField }) {
 
             <TextField
               id="customErrorMessage"
-              label="Error Message"
+              label="Custom Error Message"
               value={customErrorMessage}
               type="text"
               onChange={onValidationChange}

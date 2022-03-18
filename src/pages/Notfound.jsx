@@ -10,7 +10,7 @@ function Notfound() {
   useEffect(() => {
     setTimeout(() => {
       navigate('/');
-    }, 5000);
+    }, countDown * 1000);
 
     const timer = setInterval(() => {
       setCountDown(prev => prev - 1);

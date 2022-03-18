@@ -9,22 +9,23 @@ import { GlobalContext } from '../context/GlobalContext';
 import useFetch from '../hooks/useFetch';
 
 function CreateForm() {
+  const navigate = useNavigate();
   const { error, dispatch: dispatchError } = useContext(GlobalContext);
   const { dispatch: dispatchForms } = useContext(FormsContext);
 
-  const { executeFetch } = useFetch('/api/forms', {
-    method: 'POST',
-  });
-
-  const navigate = useNavigate();
+  const { executeFetch } = useFetch(
+    '/api/forms',
+    {
+      method: 'POST',
+    },
+    true
+  );
 
   const [form, setForm] = useState({
     id: uuidv4(),
     name: '',
     fields: [],
   });
-
-  const { name } = form;
 
   const addField = field => {
     setForm(prev => ({
@@ -33,8 +34,15 @@ function CreateForm() {
     }));
   };
 
+  const removeField = fieldId => {
+    setForm(prev => ({
+      ...prev,
+      fields: [...prev.fields.filter(field => field.id !== fieldId)],
+    }));
+  };
+
   const onSave = async () => {
-    if (name) {
+    if (form.name) {
       await executeFetch(form);
       dispatchForms({ type: 'ADD_FORM', payload: form });
       navigate('/');
@@ -87,20 +95,29 @@ function CreateForm() {
           minHeight: '85vh',
         }}
       >
-        <InputFieldList addField={addField} />
+        <Grid
+          item
+          xs={3}
+          sx={{ borderRight: 1, borderColor: 'grey.500', paddingRight: 1 }}
+        >
+          <InputFieldList addField={addField} />
+        </Grid>
 
-        <Grid item xs={9} container direction="column">
+        <Grid item xs={9} container direction="column" sx={{ paddingLeft: 1 }}>
           <TextField
             label="Form Name"
             id="name"
-            value={name}
+            value={form.name}
             onChange={onChange}
             sx={{ marginBottom: 2 }}
             required
             error={!!error}
           />
 
-          <FormCanvas fields={form.fields} />
+          <FormCanvas
+            fields={form.fields}
+            removeField={fieldId => removeField(fieldId)}
+          />
         </Grid>
       </Grid>
     </>
