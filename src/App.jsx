@@ -1,26 +1,35 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from 'react-router-dom';
-import './App.css';
-import { TextField, Typography } from '@mui/material';
+import { Container } from '@mui/material';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import FormsContextProvider from './context/FormsContext';
+import CreateForm from './pages/CreateForm';
+import Dashboard from './pages/Dashboard';
+import EditForm from './pages/EditForm';
+import Notfound from './pages/Notfound';
+import Alert from './components/Alert';
+import GlobalContextProvider from './context/GlobalContext';
 
 function App() {
   return (
-    <div>
-      {/* below 2 components are for testing purposes, remove it once development starts */}
-      <Typography variant='h2'>PFC Form Builder</Typography>
-      <TextField id='outlined-basic' label='Testing' variant='outlined' />
+    <Container>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <GlobalContextProvider>
+          <FormsContextProvider>
+            <Router>
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/create" element={<CreateForm />} />
+                <Route path="/edit/:formId" element={<EditForm />} />
+                <Route path="*" element={<Notfound />} />
+              </Routes>
+            </Router>
 
-      <Router>
-        <Routes>
-          <Route path='/' element={<h2>Main Page</h2>} />
-          <Route path='*' element={<Navigate replace to='/' />} />
-        </Routes>
-      </Router>
-    </div>
+            <Alert />
+          </FormsContextProvider>
+        </GlobalContextProvider>
+      </LocalizationProvider>
+    </Container>
   );
 }
 
