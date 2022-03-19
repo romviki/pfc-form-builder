@@ -2,6 +2,7 @@ import { DatePicker } from '@mui/lab';
 import {
   Checkbox,
   FormControl,
+  FormLabel,
   FormControlLabel,
   InputLabel,
   MenuItem,
@@ -26,17 +27,46 @@ function FormCanvas({ fields, removeField }) {
           name,
           type,
           required,
+          labelValue,
           checked,
           dropdownOptions,
-          min,
-          max,
-          minLength,
-          maxLength,
+          subType,
+          textAreaRow,
+          // min,
+          // max,
+          // minLength,
+          // maxLength,
           beforeDate,
           afterDate,
           customErrorMessage,
         }) => {
           switch (type) {
+            case 'label':
+              return (
+                <Stack
+                  key={id}
+                  direction={'row'}
+                  spacing={1}
+                  sx={{ marginBottom: 2 }}
+                >
+                  <IconButton
+                    aria-label="delete"
+                    onClick={() => removeField(id)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                  <FormControl
+                    error={required}
+                    required={required}
+                  >
+                    <FormLabel component="legend" 
+                      sx={{ marginTop: 1 }}
+                    >
+                      {labelValue}
+                    </FormLabel>
+                  </FormControl>
+                </Stack>
+              );
             case 'text':
               return (
                 <Stack
@@ -55,11 +85,10 @@ function FormCanvas({ fields, removeField }) {
                     <TextField
                       label={name}
                       variant="outlined"
+                      type={subType}
                       id={name}
                       disabled
                       required={required}
-                      minLength={minLength}
-                      maxLength={maxLength}
                       helperText={customErrorMessage}
                     />
                   </FormControl>
@@ -82,13 +111,11 @@ function FormCanvas({ fields, removeField }) {
                   <FormControl fullWidth key={id}>
                     <TextField
                       multiline
-                      rows={4}
+                      rows={textAreaRow}
                       label={name}
                       variant="outlined"
                       id={name}
                       required={required}
-                      minLength={minLength}
-                      maxLength={maxLength}
                       helperText={customErrorMessage}
                       disabled
                     />

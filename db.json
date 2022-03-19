@@ -79,6 +79,55 @@
           }
         }
       ]
+    },
+    {
+      "id": "472c4651-ce77-443e-8b1e-265ba4173875",
+      "name": "mdg test form",
+      "fields": [
+        {
+          "id": "06cb21ee-8a55-4a74-956f-b31a392f09ba",
+          "type": "label",
+          "labelValue": "firs label",
+          "required": true
+        },
+        {
+          "id": "2c23874a-af09-462e-b92f-e78976d63e00",
+          "type": "text",
+          "subType": "text",
+          "name": "text field",
+          "required": false,
+          "customErrorMessage": ""
+        },
+        {
+          "id": "0b7003a7-0930-4a30-a2b0-a4aacb9f0ed2",
+          "type": "textarea",
+          "name": "first text area",
+          "textAreaRow": "7",
+          "required": true,
+          "customErrorMessage": ""
+        },
+        {
+          "id": "cc108a94-d770-4b9b-8cf8-59686edf45bf",
+          "type": "checkbox",
+          "name": "first checkbox",
+          "checked": false,
+          "required": false,
+          "customErrorMessage": ""
+        },
+        {
+          "id": "ae38d70d-ad1c-476e-8f2f-29534bdb7d0b",
+          "type": "dropdown",
+          "name": "first dropdown",
+          "dropdownOptions": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "required": false,
+          "customErrorMessage": ""
+        }
+      ]
     }
   ]
 }
