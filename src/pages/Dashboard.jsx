@@ -16,13 +16,18 @@ function Dashboard() {
     if (form.id) {
     //event.preventDefault();
       const url = '/forms/' + form.id; 
-      fetch(url, { method: 'DELETE' })
+      const confirmed = window.confirm(
+        'Are you sure to discard the form?'
+      );
+      if (confirmed) {
+        fetch(url, { method: 'DELETE' })
         .then(response => response.json())
-        .then(data => console.log(form.id));
-
-    
-      //console.log(form.id);
-      dispatch({ type: 'DELETE_FORM', payload: form.id });
+        .catch(e => {
+          console.log(e);
+        });
+        dispatch({ type: 'DELETE_FORM', payload: form.id });
+      }
+      
       //navigate('/');
       return;
     }
