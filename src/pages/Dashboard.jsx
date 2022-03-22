@@ -5,10 +5,33 @@ import { FormsContext } from '../context/FormsContext';
 import useFetch from '../hooks/useFetch';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+//import axios from 'axios';
 
 function Dashboard() {
   const { forms, dispatch } = useContext(FormsContext);
   const { data, error } = useFetch('/api/forms', {}, true);
+  //const { dispatch: dispatchForms } = useContext(FormsContext);
+
+  const deleteForm = form => () => {
+    if (form.id) {
+    //event.preventDefault();
+      const url = '/forms/' + form.id; 
+      const confirmed = window.confirm(
+        'Are you sure to discard the form?'
+      );
+      if (confirmed) {
+        fetch(url, { method: 'DELETE' })
+        .then(response => response.json())
+        .catch(e => {
+          console.log(e);
+        });
+        dispatch({ type: 'DELETE_FORM', payload: form.id });
+      }
+      
+      //navigate('/');
+      return;
+    }
+  };
 
   useEffect(() => {
     const initialForms = () => {
@@ -21,7 +44,7 @@ function Dashboard() {
 
     initialForms();
   }, [data, dispatch, error]);
-
+  
   return (
     <Container>
       <Grid container justifyContent="space-between">
@@ -30,13 +53,13 @@ function Dashboard() {
           <Button variant="contained" component={RouterLink} to="/create">
             Create
           </Button>
-        </Box>
+        </Box> 
       </Grid>
       {forms.map(form => (
         <Box key={form.id} sx={{ flexDirection: 'row' }}>
           <IconButton
             aria-label="delete"
-            onClick={() => dispatch({ type: 'DELETE_FORM', payload: form.id })}
+            onClick={ deleteForm (form) }
           >
             <DeleteIcon />
           </IconButton>
@@ -47,6 +70,7 @@ function Dashboard() {
       ))}
     </Container>
   );
+
 }
 
 export default Dashboard;
