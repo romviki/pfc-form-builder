@@ -10,6 +10,8 @@ import {
   Stack,
   TextField,
   Typography,
+  Radio,
+  RadioGroup
 } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -30,6 +32,7 @@ function FormCanvas({ fields, removeField }) {
           labelValue,
           checked,
           dropdownOptions,
+          options,
           subType,
           textAreaRow,
           // min,
@@ -144,6 +147,38 @@ function FormCanvas({ fields, removeField }) {
                   />
                 </Stack>
               );
+            case 'radio':
+              return (
+                <Stack
+                  key={id}
+                  direction={'row'}
+                  spacing={1}
+                  sx={{ marginBottom: 2 }}
+                >
+                  <IconButton
+                    aria-label="delete"
+                    onClick={() => removeField(id)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                  <FormControl>
+                    <FormLabel>{name}</FormLabel>
+                    <RadioGroup>
+                      {options && options.map((option) => (
+                        <FormControlLabel 
+                          value={option} 
+                          control={<Radio />}
+                          label={option}
+                          disabled
+                          sx = {{
+                            marginLeft: 2
+                          }}
+                        />
+                      ))}
+                    </RadioGroup>
+                  </FormControl>
+                </Stack>
+              )
             case 'datepicker':
               return (
                 <Stack

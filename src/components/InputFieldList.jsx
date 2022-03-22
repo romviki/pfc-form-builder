@@ -5,6 +5,7 @@ import DropdownModal from './CustomInputFieldModals/DropdownModal';
 import TextFieldModal from './CustomInputFieldModals/TextFieldModal';
 import TextAreaModal from './CustomInputFieldModals/TextAreaModal';
 import LabelModal from './CustomInputFieldModals/LabelModal';
+import RadioModal from './CustomInputFieldModals/RadioModal';
 
 function InputFieldList({ addField }) {
   return (
@@ -21,9 +22,9 @@ function InputFieldList({ addField }) {
 
       <CheckboxModal title="Checkbox" type="checkbox" addField={addField} />
 
-      <InputFieldModal
-        title="Radio buttons"
-        type="radioButtons"
+      <RadioModal
+        title="Radio Buttons"
+        type="radio"
         addField={addField}
       />
 
