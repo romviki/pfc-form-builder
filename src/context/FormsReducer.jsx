@@ -6,6 +6,8 @@ function formsReducer(state, action) {
       return [...state, action.payload];
     case 'DELETE_FORM':
       return state.filter(form => form.id !== action.payload);
+    case 'EDIT_FORM':
+      return [...state, action.payload];
     default:
       return state;
   }
