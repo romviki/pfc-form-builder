@@ -29,100 +29,78 @@
       ]
     },
     {
-      "id": "5c5d7604-5762-410f-9e29-389a48460e18",
-      "name": "Demo",
+      "id": "41857e50-355c-45a2-bd92-7377789ac3fa",
+      "name": "full form",
       "fields": [
         {
-          "id": "7d4324cd-9b9e-4b51-b5ee-b257427ae0a9",
-          "type": "text",
-          "name": "Text 1",
-          "required": true,
-          "errorMessage": "it's required"
-        },
-        {
-          "id": "54f1a2db-e964-4b70-9472-ce19a852ecce",
-          "type": "textarea",
-          "name": "Hello World",
-          "required": false,
-          "minLength": "10",
-          "maxLength": "100"
-        }
-      ]
-    },
-    {
-      "id": "22ee2443-5ffc-4904-bef6-ba3fdee9acd1",
-      "name": "testsetsetes",
-      "fields": [
-        {
-          "id": "6172ed33-a906-41c9-86ec-a2067fe890f9",
-          "type": "datepicker",
-          "name": "testse",
-          "validation": {
-            "required": false,
-            "min": "",
-            "max": "",
-            "beforeDate": null,
-            "afterDate": null
-          }
-        },
-        {
-          "id": "52756b9d-8ca2-444a-8dd1-6ac152c324e1",
-          "type": "datepicker",
-          "name": "testestsetestt",
-          "validation": {
-            "required": false,
-            "min": "",
-            "max": "",
-            "beforeDate": null,
-            "afterDate": null,
-            "customErrorMessage": "setesetstes"
-          }
-        }
-      ]
-    },
-    {
-      "id": "472c4651-ce77-443e-8b1e-265ba4173875",
-      "name": "mdg test form",
-      "fields": [
-        {
-          "id": "06cb21ee-8a55-4a74-956f-b31a392f09ba",
+          "id": "b977e76a-2dd3-44be-9ac5-b121bf520d8d",
           "type": "label",
-          "labelValue": "firs label",
-          "required": true
+          "labelValue": "text field",
+          "required": false
         },
         {
-          "id": "2c23874a-af09-462e-b92f-e78976d63e00",
+          "id": "e776f09b-98dd-49b6-9283-606974b2279d",
           "type": "text",
           "subType": "text",
-          "name": "text field",
+          "name": "textinput1",
           "required": false,
           "customErrorMessage": ""
         },
         {
-          "id": "0b7003a7-0930-4a30-a2b0-a4aacb9f0ed2",
-          "type": "textarea",
-          "name": "first text area",
-          "textAreaRow": "7",
-          "required": true,
-          "customErrorMessage": ""
+          "id": "67a82f32-15e7-41d2-a5d7-03c47d0711ac",
+          "type": "label",
+          "labelValue": "checkboxes",
+          "required": false
         },
         {
-          "id": "cc108a94-d770-4b9b-8cf8-59686edf45bf",
+          "id": "11244b29-462e-484e-8c1f-b2aab1bf4b29",
           "type": "checkbox",
-          "name": "first checkbox",
+          "name": "chbox1",
           "checked": false,
           "required": false,
           "customErrorMessage": ""
         },
         {
-          "id": "ae38d70d-ad1c-476e-8f2f-29534bdb7d0b",
+          "id": "29ac7292-6df8-4d7d-9d61-baea1960af55",
+          "type": "checkbox",
+          "name": "chbox2",
+          "checked": true,
+          "required": false,
+          "customErrorMessage": ""
+        },
+        {
+          "id": "9f229860-9af8-4322-a1f1-c65be920f1d9",
+          "type": "label",
+          "labelValue": "radio buttons",
+          "required": false
+        },
+        {
+          "id": "963e4121-68c1-4f2c-9804-3f7f20230deb",
+          "type": "radio",
+          "name": "radio buttons",
+          "options": [
+            "1",
+            "2",
+            "3"
+          ],
+          "required": false
+        },
+        {
+          "id": "fc95433c-b88c-4444-9122-5e6982be2e7d",
+          "type": "label",
+          "labelValue": "dropdown",
+          "required": false
+        },
+        {
+          "id": "3c7a8cf7-1669-42cd-b379-daef0c9a3276",
           "type": "dropdown",
-          "name": "first dropdown",
+          "name": "dropwdown1",
           "dropdownOptions": [
             "1",
             "2",
             "3",
-            "4"
+            "4",
+            "5"
           ],
           "required": false,
           "customErrorMessage": ""

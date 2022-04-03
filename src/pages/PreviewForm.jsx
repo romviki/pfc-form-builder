@@ -1,3 +1,7 @@
+import { useContext, useEffect } from 'react';
+import { useParams, Link as RouterLink } from 'react-router-dom';
+import { FormsContext } from '../context/FormsContext';
+import useFetch from '../hooks/useFetch';
 import { DatePicker } from '@mui/lab';
 import {
   FormControl,
@@ -8,20 +12,43 @@ import {
   Typography,
   Radio,
   RadioGroup,
+  Container,
+  Grid,
+  Button,
 } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
-import DropdownInput from './CustomInputFields/DropDownInput';
-import CheckboxInput from './CustomInputFields/CheckboxInput';
+import { Box } from '@mui/system';
+import DropdownInput from '../components/CustomInputFields/DropDownInput';
+import CheckboxInput from '../components/CustomInputFields/CheckboxInput';
 
-function FormCanvas({ fields, removeField }) {
+const PreviewForm = () => {
+  const { formId } = useParams();
+  const { forms, dispatch } = useContext(FormsContext);
+  const { data, error } = useFetch('/api/forms', {}, true);
+
+  useEffect(() => {
+    const initialForms = () => {
+      if (error) {
+        dispatch({ type: 'GET_FORMS', payload: [] });
+      } else if (data) {
+        dispatch({ type: 'GET_FORMS', payload: data });
+        dispatch({ type: 'GET_FORM_BY_ID', payload: formId });
+      }
+    };
+
+    initialForms();
+  }, [data, dispatch, error, formId]);
+
   return (
-    <>
-      <Typography variant="h6" marginBottom={2}>
-        Canvas
-      </Typography>
-
-      {fields.map(
+    <Container>
+      <Grid container justifyContent="space-between">
+        <Typography variant="h2">{forms[0].name}</Typography>
+        <Box alignSelf="center">
+          <Button variant="contained" component={RouterLink} to="/">
+            Back
+          </Button>
+        </Box>
+      </Grid>
+      {forms[0].fields.map(
         ({
           id,
           name,
@@ -44,66 +71,32 @@ function FormCanvas({ fields, removeField }) {
           switch (type) {
             case 'label':
               return (
-                <Stack
-                  key={id}
-                  direction={'row'}
-                  spacing={1}
-                  sx={{ marginBottom: 2 }}
-                >
-                  <IconButton
-                    aria-label="delete"
-                    onClick={() => removeField(id)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
+                <Box>
                   <FormControl error={required} required={required}>
                     <FormLabel component="legend" sx={{ marginTop: 1 }}>
                       {labelValue}
                     </FormLabel>
                   </FormControl>
-                </Stack>
+                </Box>
               );
             case 'text':
               return (
-                <Stack
-                  key={id}
-                  direction={'row'}
-                  spacing={1}
-                  sx={{ marginBottom: 2 }}
-                >
-                  <IconButton
-                    aria-label="delete"
-                    onClick={() => removeField(id)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
+                <Box>
                   <FormControl fullWidth key={id}>
                     <TextField
                       label={name}
                       variant="outlined"
                       type={subType}
                       id={name}
-                      disabled
                       required={required}
                       helperText={customErrorMessage}
                     />
                   </FormControl>
-                </Stack>
+                </Box>
               );
             case 'textarea':
               return (
-                <Stack
-                  key={id}
-                  direction={'row'}
-                  spacing={1}
-                  sx={{ marginBottom: 2 }}
-                >
-                  <IconButton
-                    aria-label="delete"
-                    onClick={() => removeField(id)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
+                <Box>
                   <FormControl fullWidth key={id}>
                     <TextField
                       multiline
@@ -113,59 +106,36 @@ function FormCanvas({ fields, removeField }) {
                       id={name}
                       required={required}
                       helperText={customErrorMessage}
-                      disabled
                     />
                   </FormControl>
-                </Stack>
+                </Box>
               );
             case 'checkbox':
               return (
-                <Stack
-                  key={id}
-                  direction={'row'}
-                  spacing={1}
-                  sx={{ marginBottom: 2 }}
-                >
-                  <IconButton
-                    aria-label="delete"
-                    onClick={() => removeField(id)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
+                <Box>
                   <CheckboxInput
+                    key={id}
                     id={id}
                     name={name}
                     checked={checked}
                     required={required}
                     customErrorMessage={customErrorMessage}
-                    disabled={true}
+                    disabled={false}
                   />
-                </Stack>
+                </Box>
               );
             case 'radio':
               return (
-                <Stack
-                  key={id}
-                  direction={'row'}
-                  spacing={1}
-                  sx={{ marginBottom: 2 }}
-                >
-                  <IconButton
-                    aria-label="delete"
-                    onClick={() => removeField(id)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
+                <Box>
                   <FormControl>
-                    <FormLabel>{name}</FormLabel>
                     <RadioGroup>
                       {options &&
                         options.map(option => (
                           <FormControlLabel
+                            key={option}
                             value={option}
                             control={<Radio />}
                             label={option}
-                            disabled
                             sx={{
                               marginLeft: 2,
                             }}
@@ -173,22 +143,11 @@ function FormCanvas({ fields, removeField }) {
                         ))}
                     </RadioGroup>
                   </FormControl>
-                </Stack>
+                </Box>
               );
             case 'datepicker':
               return (
-                <Stack
-                  key={id}
-                  direction={'row'}
-                  spacing={1}
-                  sx={{ marginBottom: 2 }}
-                >
-                  <IconButton
-                    aria-label="delete"
-                    onClick={() => removeField(id)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
+                <Box>
                   <FormControl key={id}>
                     <DatePicker
                       label={name}
@@ -199,25 +158,13 @@ function FormCanvas({ fields, removeField }) {
                           {...params}
                         />
                       )}
-                      disabled
                     />
                   </FormControl>
-                </Stack>
+                </Box>
               );
             case 'dropdown':
               return (
-                <Stack
-                  key={id}
-                  direction={'row'}
-                  spacing={1}
-                  sx={{ marginBottom: 2 }}
-                >
-                  <IconButton
-                    aria-label="delete"
-                    onClick={() => removeField(id)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
+                <Box>
                   <DropdownInput
                     key={id}
                     id={id}
@@ -225,9 +172,9 @@ function FormCanvas({ fields, removeField }) {
                     required={required}
                     dropdownOptions={dropdownOptions}
                     customErrorMessage={customErrorMessage}
-                    disabled={true}
+                    disabled={false}
                   />
-                </Stack>
+                </Box>
               );
 
             default:
@@ -235,8 +182,8 @@ function FormCanvas({ fields, removeField }) {
           }
         }
       )}
-    </>
+    </Container>
   );
-}
+};
 
-export default FormCanvas;
+export default PreviewForm;

@@ -14,20 +14,18 @@ function Dashboard() {
 
   const deleteForm = form => () => {
     if (form.id) {
-    //event.preventDefault();
-      const url = '/forms/' + form.id; 
-      const confirmed = window.confirm(
-        'Are you sure to discard the form?'
-      );
+      //event.preventDefault();
+      const url = '/forms/' + form.id;
+      const confirmed = window.confirm('Are you sure to discard the form?');
       if (confirmed) {
         fetch(url, { method: 'DELETE' })
-        .then(response => response.json())
-        .catch(e => {
-          console.log(e);
-        });
+          .then(response => response.json())
+          .catch(e => {
+            console.log(e);
+          });
         dispatch({ type: 'DELETE_FORM', payload: form.id });
       }
-      
+
       //navigate('/');
       return;
     }
@@ -44,7 +42,7 @@ function Dashboard() {
 
     initialForms();
   }, [data, dispatch, error]);
-  
+
   return (
     <Container>
       <Grid container justifyContent="space-between">
@@ -53,24 +51,24 @@ function Dashboard() {
           <Button variant="contained" component={RouterLink} to="/create">
             Create
           </Button>
-        </Box> 
+        </Box>
       </Grid>
       {forms.map(form => (
         <Box key={form.id} sx={{ flexDirection: 'row' }}>
-          <IconButton
-            aria-label="delete"
-            onClick={ deleteForm (form) }
-          >
+          <IconButton aria-label="delete" onClick={deleteForm(form)}>
             <DeleteIcon />
           </IconButton>
-          <Link underline="none" component={RouterLink} to={`/edit/${form.id}`}>
+          <Link
+            underline="none"
+            component={RouterLink}
+            to={`/preview/${form.id}`}
+          >
             {form.name}
           </Link>
         </Box>
       ))}
     </Container>
   );
-
 }
 
 export default Dashboard;

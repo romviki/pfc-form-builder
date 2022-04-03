@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import FormsContextProvider from './context/FormsContext';
 import CreateForm from './pages/CreateForm';
 import Dashboard from './pages/Dashboard';
-import EditForm from './pages/EditForm';
+import PreviewForm from './pages/PreviewForm';
 import Notfound from './pages/Notfound';
 import Alert from './components/Alert';
 import GlobalContextProvider from './context/GlobalContext';
@@ -20,7 +20,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/create" element={<CreateForm />} />
-                <Route path="/edit/:formId" element={<EditForm />} />
+                <Route path="/preview/:formId" element={<PreviewForm />} />
                 <Route path="*" element={<Notfound />} />
               </Routes>
             </Router>
