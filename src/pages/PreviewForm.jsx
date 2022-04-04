@@ -7,7 +7,6 @@ import {
   FormControl,
   FormLabel,
   FormControlLabel,
-  Stack,
   TextField,
   Typography,
   Radio,
@@ -15,6 +14,7 @@ import {
   Container,
   Grid,
   Button,
+  Stack,
 } from '@mui/material';
 import { Box } from '@mui/system';
 import DropdownInput from '../components/CustomInputFields/DropDownInput';
@@ -40,14 +40,26 @@ const PreviewForm = () => {
 
   return (
     <Container>
-      <Grid container justifyContent="space-between">
+      <Stack
+        direction={'row'}
+        spacing={1}
+        sx={{ marginBottom: 2, justifyContent: 'space-between' }}
+      >
         <Typography variant="h2">{forms[0].name}</Typography>
         <Box alignSelf="center">
+          <Button
+            variant="contained"
+            component={RouterLink}
+            to={`/edit/${forms[0].id}`}
+            sx={{ marginRight: 2 }}
+          >
+            Edit
+          </Button>
           <Button variant="contained" component={RouterLink} to="/">
             Back
           </Button>
         </Box>
-      </Grid>
+      </Stack>
       {forms[0].fields.map(
         ({
           id,
@@ -71,7 +83,7 @@ const PreviewForm = () => {
           switch (type) {
             case 'label':
               return (
-                <Box>
+                <Box sx={{ marginBottom: 2 }}>
                   <FormControl error={required} required={required}>
                     <FormLabel component="legend" sx={{ marginTop: 1 }}>
                       {labelValue}
@@ -81,7 +93,7 @@ const PreviewForm = () => {
               );
             case 'text':
               return (
-                <Box>
+                <Box sx={{ marginBottom: 2 }}>
                   <FormControl fullWidth key={id}>
                     <TextField
                       label={name}
@@ -96,7 +108,7 @@ const PreviewForm = () => {
               );
             case 'textarea':
               return (
-                <Box>
+                <Box sx={{ marginBottom: 2 }}>
                   <FormControl fullWidth key={id}>
                     <TextField
                       multiline
@@ -112,7 +124,7 @@ const PreviewForm = () => {
               );
             case 'checkbox':
               return (
-                <Box>
+                <Box sx={{ marginBottom: 2 }}>
                   <CheckboxInput
                     key={id}
                     id={id}
@@ -126,7 +138,7 @@ const PreviewForm = () => {
               );
             case 'radio':
               return (
-                <Box>
+                <Box sx={{ marginBottom: 2 }}>
                   <FormControl>
                     <RadioGroup>
                       {options &&
@@ -147,7 +159,7 @@ const PreviewForm = () => {
               );
             case 'datepicker':
               return (
-                <Box>
+                <Box sx={{ marginBottom: 2 }}>
                   <FormControl key={id}>
                     <DatePicker
                       label={name}
@@ -164,7 +176,7 @@ const PreviewForm = () => {
               );
             case 'dropdown':
               return (
-                <Box>
+                <Box sx={{ marginBottom: 2 }}>
                   <DropdownInput
                     key={id}
                     id={id}

@@ -9,6 +9,7 @@ import PreviewForm from './pages/PreviewForm';
 import Notfound from './pages/Notfound';
 import Alert from './components/Alert';
 import GlobalContextProvider from './context/GlobalContext';
+import EditForm from './pages/EditForm';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/create" element={<CreateForm />} />
                 <Route path="/preview/:formId" element={<PreviewForm />} />
+                <Route path="/edit/:formId" element={<EditForm />} />
                 <Route path="*" element={<Notfound />} />
               </Routes>
             </Router>
