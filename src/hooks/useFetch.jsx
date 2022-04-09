@@ -6,7 +6,7 @@ function useFetch(url, options, immediate = false) {
   const [error, setError] = useState(null);
   const { dispatch } = useContext(GlobalContext);
 
-  const executeFetch = useCallback(async body => {
+  const executeFetch = useCallback(async (body, params) => {
     try {
       dispatch({ type: 'SET_LOADING' });
 
@@ -17,7 +17,7 @@ function useFetch(url, options, immediate = false) {
         };
       }
 
-      const res = await fetch(url, options);
+      const res = await fetch(params ? `${url}/${params}` : url, options);
       if (!res.ok) throw new Error('Something went wrong');
 
       const data = await res.json();

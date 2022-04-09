@@ -29,100 +29,23 @@
       ]
     },
     {
-      "id": "5c5d7604-5762-410f-9e29-389a48460e18",
-      "name": "Demo",
+      "id": "bbfe2dce-2e57-4f90-bdfc-7972dcd58f98",
+      "name": "Test",
       "fields": [
         {
-          "id": "7d4324cd-9b9e-4b51-b5ee-b257427ae0a9",
-          "type": "text",
-          "name": "Text 1",
-          "required": true,
-          "errorMessage": "it's required"
-        },
-        {
-          "id": "54f1a2db-e964-4b70-9472-ce19a852ecce",
-          "type": "textarea",
-          "name": "Hello World",
-          "required": false,
-          "minLength": "10",
-          "maxLength": "100"
-        }
-      ]
-    },
-    {
-      "id": "22ee2443-5ffc-4904-bef6-ba3fdee9acd1",
-      "name": "testsetsetes",
-      "fields": [
-        {
-          "id": "6172ed33-a906-41c9-86ec-a2067fe890f9",
-          "type": "datepicker",
-          "name": "testse",
-          "validation": {
-            "required": false,
-            "min": "",
-            "max": "",
-            "beforeDate": null,
-            "afterDate": null
-          }
-        },
-        {
-          "id": "52756b9d-8ca2-444a-8dd1-6ac152c324e1",
-          "type": "datepicker",
-          "name": "testestsetestt",
-          "validation": {
-            "required": false,
-            "min": "",
-            "max": "",
-            "beforeDate": null,
-            "afterDate": null,
-            "customErrorMessage": "setesetstes"
-          }
-        }
-      ]
-    },
-    {
-      "id": "472c4651-ce77-443e-8b1e-265ba4173875",
-      "name": "mdg test form",
-      "fields": [
-        {
-          "id": "06cb21ee-8a55-4a74-956f-b31a392f09ba",
-          "type": "label",
-          "labelValue": "firs label",
-          "required": true
-        },
-        {
-          "id": "2c23874a-af09-462e-b92f-e78976d63e00",
+          "id": "4c61f7e1-b343-48b7-a1c8-9f2c09224e21",
           "type": "text",
           "subType": "text",
-          "name": "text field",
-          "required": false,
-          "customErrorMessage": ""
-        },
-        {
-          "id": "0b7003a7-0930-4a30-a2b0-a4aacb9f0ed2",
-          "type": "textarea",
-          "name": "first text area",
-          "textAreaRow": "7",
+          "name": "Test",
           "required": true,
-          "customErrorMessage": ""
-        },
-        {
-          "id": "cc108a94-d770-4b9b-8cf8-59686edf45bf",
-          "type": "checkbox",
-          "name": "first checkbox",
-          "checked": false,
-          "required": false,
-          "customErrorMessage": ""
-        },
-        {
-          "id": "ae38d70d-ad1c-476e-8f2f-29534bdb7d0b",
-          "type": "dropdown",
-          "name": "first dropdown",
-          "dropdownOptions": ["1", "2", "3", "4"],
-          "required": false,
-          "customErrorMessage": ""
+          "customErrorMessage": "Hello"
         }
       ]
+    },
+    {
+      "id": "2f114498-1b48-4771-b8ea-aa44d70495f2",
+      "name": "hello",
+      "fields": []
     }
   ]
 }

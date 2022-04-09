@@ -1,14 +1,14 @@
-import { Container } from '@mui/material';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import { Container } from '@mui/material';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Alert from './components/Alert';
 import FormsContextProvider from './context/FormsContext';
+import GlobalContextProvider from './context/GlobalContext';
 import CreateForm from './pages/CreateForm';
 import Dashboard from './pages/Dashboard';
-import EditForm from './pages/EditForm';
 import Notfound from './pages/Notfound';
-import Alert from './components/Alert';
-import GlobalContextProvider from './context/GlobalContext';
+import PreviewForm from './pages/PreviewForm';
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/create" element={<CreateForm />} />
-                <Route path="/edit/:formId" element={<EditForm />} />
+                <Route path="/forms/:formId" element={<PreviewForm />} />
                 <Route path="*" element={<Notfound />} />
               </Routes>
             </Router>
