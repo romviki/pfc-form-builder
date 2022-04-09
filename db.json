@@ -118,12 +118,7 @@
           "id": "ae38d70d-ad1c-476e-8f2f-29534bdb7d0b",
           "type": "dropdown",
           "name": "first dropdown",
-          "dropdownOptions": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
+          "dropdownOptions": ["1", "2", "3", "4"],
           "required": false,
           "customErrorMessage": ""
         }

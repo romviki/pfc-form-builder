@@ -1,13 +1,12 @@
 import {
-	Button,
+  Button,
   Checkbox,
   FormControlLabel,
   Grid,
   Modal,
   TextField,
   Typography,
-
-} from '@mui/material'
+} from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box } from '@mui/system';
@@ -16,91 +15,98 @@ import { v4 as uuidv4 } from 'uuid';
 import { GlobalContext } from '../../context/GlobalContext';
 
 function TextAreaModal({ title, type, addField }) {
-	const initialInputProperties = {
+  const initialInputProperties = {
     id: uuidv4(),
     type,
     name: '',
-		textAreaRow: 4,
+    textAreaRow: 4,
     required: false,
     customErrorMessage: '',
   };
-	const [openModal, setOpenModal] = useState(false);
-	const [inputProperties, setInputProperties] = useState(initialInputProperties);
+  const [openModal, setOpenModal] = useState(false);
+  const [inputProperties, setInputProperties] = useState(
+    initialInputProperties
+  );
 
-	const { error, dispatch } = useContext(GlobalContext);
-	const [ inputNameError, setInputNameError ] = useState(false);
-	const [ textAreaRowError, setTextAreaRowError ] = useState(false);
+  const { error, dispatch } = useContext(GlobalContext);
+  const [inputNameError, setInputNameError] = useState(false);
+  const [textAreaRowError, setTextAreaRowError] = useState(false);
 
-	const onTextInputChange = e => {
+  const onTextInputChange = e => {
     setInputProperties(prev => ({
       ...prev,
       [e.target.id]: e.target.value,
     }));
   };
 
-	const onRequiredCheckboxChange = e => {
+  const onRequiredCheckboxChange = e => {
     setInputProperties(prev => ({
       ...prev,
       [e.target.id]: e.target.checked,
     }));
   };
 
-	const validateInputForm = () => {
-		let isValidated = true;
-		const textAreaRow = inputProperties.textAreaRow ? parseInt(inputProperties.textAreaRow) : 0;
+  const validateInputForm = () => {
+    let isValidated = true;
+    const textAreaRow = inputProperties.textAreaRow
+      ? parseInt(inputProperties.textAreaRow)
+      : 0;
 
-		if (!inputProperties.name) {
+    if (!inputProperties.name) {
       isValidated = false;
-			setInputNameError(true);
+      setInputNameError(true);
       dispatch({ type: 'SET_ERROR', payload: 'Input must have a name' });
     } else if (textAreaRow === 0) {
-			isValidated = false;
-			setTextAreaRowError(true);
-      dispatch({ type: 'SET_ERROR', payload: 'Please provide a valid row count' });
-		}
+      isValidated = false;
+      setTextAreaRowError(true);
+      dispatch({
+        type: 'SET_ERROR',
+        payload: 'Please provide a valid row count',
+      });
+    }
 
-		return isValidated;
-	};
+    return isValidated;
+  };
 
-	const onSubmit = e => {
-		e.preventDefault();
-		
-		setInputNameError(false);
-		setTextAreaRowError(false);
+  const onSubmit = e => {
+    e.preventDefault();
 
-		if (validateInputForm()) {
-			let cleanedInputField = cleanInputForm();
-			addField(cleanedInputField);
+    setInputNameError(false);
+    setTextAreaRowError(false);
 
-			console.log(`ADDED - ${title} Input :>>`, cleanedInputField);
-			setInputProperties(initialInputProperties);
-			setOpenModal(false);
-			return;
-		}
-	}
+    if (validateInputForm()) {
+      let cleanedInputField = cleanInputForm();
+      addField(cleanedInputField);
 
-	const cleanInputForm = () => {
-		const tempInput = { ...inputProperties };
+      console.log(`ADDED - ${title} Input :>>`, cleanedInputField);
+      setInputProperties(initialInputProperties);
+      setOpenModal(false);
+      return;
+    }
+  };
 
-		tempInput.name && tempInput.name.trim();
+  const cleanInputForm = () => {
+    const tempInput = { ...inputProperties };
+
+    tempInput.name && tempInput.name.trim();
     tempInput.customErrorMessage && tempInput.customErrorMessage.trim();
 
-		return tempInput;
-	}
+    return tempInput;
+  };
 
   return (
     <Box sx={{ marginBottom: 2 }}>
-			<Button variant="contained" onClick={() => setOpenModal(true)}>
+      <Button variant="contained" onClick={() => setOpenModal(true)}>
         {title}
       </Button>
 
-			<Modal
+      <Modal
         open={openModal}
         onClose={() => setOpenModal(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-				<Box
+        <Box
           sx={{
             position: 'absolute',
             top: '50%',
@@ -113,7 +119,7 @@ function TextAreaModal({ title, type, addField }) {
             borderRadius: '4px',
           }}
         >
-					{/* Modal title */}
+          {/* Modal title */}
           <Grid container justifyContent="flex-start">
             <Box>
               <IconButton
@@ -135,7 +141,7 @@ function TextAreaModal({ title, type, addField }) {
             </Typography>
           </Grid>
 
-					{/* Modal content */}
+          {/* Modal content */}
           <Box
             sx={{
               display: 'flex',
@@ -144,7 +150,7 @@ function TextAreaModal({ title, type, addField }) {
               justifyContent: 'space-between',
             }}
           >
-						{/* Input properties form */}
+            {/* Input properties form */}
             <Typography variant="subtitle1" component="h3" marginBottom={2}>
               Input Properties
             </Typography>
@@ -157,36 +163,36 @@ function TextAreaModal({ title, type, addField }) {
               error={!!inputNameError}
               onChange={onTextInputChange}
               required
-							autoComplete='off'
+              autoComplete="off"
               sx={{ marginBottom: 2 }}
             />
 
-						<TextField
-							id="textAreaRow"
-							label="Rows"
-							inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-							value={inputProperties.textAreaRow}
-							type="number"
-							error={!!textAreaRowError}
-							onChange={onTextInputChange}
-							sx={{
-								marginBottom: 2,
-							}}
-						/>
-
-						<TextField
-              id="customErrorMessage"
-              label="Custom Error Message"
-              value={inputProperties.customErrorMessage}
-              type="text"
+            <TextField
+              id="textAreaRow"
+              label="Rows"
+              inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+              value={inputProperties.textAreaRow}
+              type="number"
+              error={!!textAreaRowError}
               onChange={onTextInputChange}
-							autoComplete='off'
               sx={{
                 marginBottom: 2,
               }}
             />
 
-						<FormControlLabel
+            <TextField
+              id="customErrorMessage"
+              label="Custom Error Message"
+              value={inputProperties.customErrorMessage}
+              type="text"
+              onChange={onTextInputChange}
+              autoComplete="off"
+              sx={{
+                marginBottom: 2,
+              }}
+            />
+
+            <FormControlLabel
               control={
                 <Checkbox
                   id="required"
@@ -200,7 +206,7 @@ function TextAreaModal({ title, type, addField }) {
               }}
             />
 
-						{/* Modal submit and clear buttons */}
+            {/* Modal submit and clear buttons */}
             <Box
               sx={{
                 display: 'flex',
@@ -219,11 +225,11 @@ function TextAreaModal({ title, type, addField }) {
                 Clear
               </Button>
             </Box>
-					</Box>
-				</Box>
-			</Modal>
-		</Box>
-  )
+          </Box>
+        </Box>
+      </Modal>
+    </Box>
+  );
 }
 
-export default TextAreaModal
+export default TextAreaModal;

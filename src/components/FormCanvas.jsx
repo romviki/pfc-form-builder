@@ -11,7 +11,7 @@ import {
   TextField,
   Typography,
   Radio,
-  RadioGroup
+  RadioGroup,
 } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -58,13 +58,8 @@ function FormCanvas({ fields, removeField }) {
                   >
                     <DeleteIcon />
                   </IconButton>
-                  <FormControl
-                    error={required}
-                    required={required}
-                  >
-                    <FormLabel component="legend" 
-                      sx={{ marginTop: 1 }}
-                    >
+                  <FormControl error={required} required={required}>
+                    <FormLabel component="legend" sx={{ marginTop: 1 }}>
                       {labelValue}
                     </FormLabel>
                   </FormControl>
@@ -164,21 +159,22 @@ function FormCanvas({ fields, removeField }) {
                   <FormControl>
                     <FormLabel>{name}</FormLabel>
                     <RadioGroup>
-                      {options && options.map((option) => (
-                        <FormControlLabel 
-                          value={option} 
-                          control={<Radio />}
-                          label={option}
-                          disabled
-                          sx = {{
-                            marginLeft: 2
-                          }}
-                        />
-                      ))}
+                      {options &&
+                        options.map(option => (
+                          <FormControlLabel
+                            value={option}
+                            control={<Radio />}
+                            label={option}
+                            disabled
+                            sx={{
+                              marginLeft: 2,
+                            }}
+                          />
+                        ))}
                     </RadioGroup>
                   </FormControl>
                 </Stack>
-              )
+              );
             case 'datepicker':
               return (
                 <Stack

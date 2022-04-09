@@ -22,11 +22,7 @@ function InputFieldList({ addField }) {
 
       <CheckboxModal title="Checkbox" type="checkbox" addField={addField} />
 
-      <RadioModal
-        title="Radio Buttons"
-        type="radio"
-        addField={addField}
-      />
+      <RadioModal title="Radio Buttons" type="radio" addField={addField} />
 
       <InputFieldModal
         title="Date picker"
