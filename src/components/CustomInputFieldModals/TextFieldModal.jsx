@@ -88,7 +88,6 @@ export default function TextFieldModal({ title, type, addField }) {
       let cleanedInputField = cleanInputForm();
       addField(cleanedInputField);
 
-      console.log(`ADDED - ${title} Input :>>`, cleanedInputField);
       setInputProperties(initialInputProperties);
       setOpenModal(false);
       return;

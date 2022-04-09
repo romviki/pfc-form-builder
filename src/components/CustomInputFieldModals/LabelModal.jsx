@@ -59,7 +59,6 @@ export default function LabelModal({ title, type, addField }) {
     if (validateLabelForm()) {
       // let cleanedLabelField = cleanInputForm();
       addField(labelProperties);
-      console.log(`ADDED - ${title} Label :>>`, labelProperties);
 
       setLabelProperties(initialLabelProperties);
       setOpenModal(false);

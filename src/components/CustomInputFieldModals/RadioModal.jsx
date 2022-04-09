@@ -64,7 +64,6 @@ export default function RadioModal({ title, type, addField }) {
   };
 
   const onRemoveOption = index => {
-    console.log('index', index);
     const list = [...inputProperties.options];
     list.splice(index, 1);
     setInputProperties(prev => ({
@@ -98,7 +97,6 @@ export default function RadioModal({ title, type, addField }) {
 
     let cleanField = cleanUp();
     addField(cleanField);
-    console.log(`ADDED - ${title} Input :>>`, cleanField);
     setInputProperties(initialInputProperties);
     setOpenModal(false);
   };

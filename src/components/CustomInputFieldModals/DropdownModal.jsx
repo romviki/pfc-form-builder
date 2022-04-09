@@ -115,7 +115,6 @@ const DropdownModal = ({ title, type, addField }) => {
     if (validateInputForm()) {
       let cleanedInputField = cleanInputForm();
       addField(cleanedInputField);
-      console.log(`ADDED - ${title} Input :>>`, cleanedInputField);
 
       setInputProperties(initialInputProperties);
       setOpenModal(false);

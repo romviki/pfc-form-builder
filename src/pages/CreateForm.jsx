@@ -13,13 +13,9 @@ function CreateForm() {
   const { error, dispatch: dispatchError } = useContext(GlobalContext);
   const { dispatch: dispatchForms } = useContext(FormsContext);
 
-  const { executeFetch } = useFetch(
-    '/api/forms',
-    {
-      method: 'POST',
-    },
-    true
-  );
+  const { executeFetch } = useFetch('/api/forms', {
+    method: 'POST',
+  });
 
   const [form, setForm] = useState({
     id: uuidv4(),
@@ -42,7 +38,7 @@ function CreateForm() {
   };
 
   const onSave = async () => {
-    if (form.name) {
+    if (form?.name) {
       await executeFetch(form);
       dispatchForms({ type: 'ADD_FORM', payload: form });
       navigate('/');
@@ -69,7 +65,7 @@ function CreateForm() {
 
         <Grid item alignSelf="center">
           <Button variant="contained" onClick={onSave} sx={{ marginRight: 2 }}>
-            Save Form
+            Save
           </Button>
 
           <Button
