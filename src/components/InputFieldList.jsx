@@ -1,7 +1,5 @@
 import { Typography } from '@mui/material';
 import InputFieldModal from './CustomInputFieldModals/InputFieldModal';
-import CheckboxModal from './CustomInputFieldModals/CheckboxModal';
-import DropdownModal from './CustomInputFieldModals/DropdownModal';
 import TextFieldModal from './CustomInputFieldModals/TextFieldModal';
 import TextAreaModal from './CustomInputFieldModals/TextAreaModal';
 import LabelModal from './CustomInputFieldModals/LabelModal';
