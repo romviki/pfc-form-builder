@@ -1,10 +1,19 @@
-import DeleteIcon from '@mui/icons-material/Delete';
-import { Box, Button, Container, Grid, Link, Typography } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Link,
+  Stack,
+  Typography,
+} from '@mui/material';
 import { useContext, useEffect } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { FormsContext } from '../context/FormsContext';
 import useFetch from '../hooks/useFetch';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 function Dashboard() {
   const { forms, dispatch } = useContext(FormsContext);
@@ -16,6 +25,8 @@ function Dashboard() {
     },
     false
   );
+
+  const navigate = useNavigate();
 
   const deleteForm = async form => {
     if (form.id) {
@@ -53,18 +64,29 @@ function Dashboard() {
         </Box>
       </Grid>
       {forms.map(form => (
-        <Box key={form.id} sx={{ flexDirection: 'row' }}>
+        <Stack
+          key={form._id}
+          direction={'row'}
+          spacing={1}
+          sx={{ alignItems: 'center' }}
+        >
           <IconButton aria-label="delete" onClick={() => deleteForm(form)}>
             <DeleteIcon />
+          </IconButton>
+          <IconButton
+            aria-label="edit"
+            onClick={() => navigate(`/forms/${form._id}`)}
+          >
+            <EditIcon />
           </IconButton>
           <Link
             underline="none"
             component={RouterLink}
-            to={`/forms/${form.id}`}
+            to={`/forms/${form._id}`}
           >
             {form.name}
           </Link>
-        </Box>
+        </Stack>
       ))}
     </Container>
   );

@@ -18,7 +18,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 function FormCanvas({ fields, removeField, isEdit }) {
   const switchFormControl = ({
-    id,
+    _id,
     name,
     type,
     required,
@@ -45,7 +45,7 @@ function FormCanvas({ fields, removeField, isEdit }) {
         );
       case 'text':
         return (
-          <FormControl fullWidth key={id}>
+          <FormControl fullWidth key={_id}>
             <TextField
               label={name}
               variant="outlined"
@@ -59,7 +59,7 @@ function FormCanvas({ fields, removeField, isEdit }) {
         );
       case 'textarea':
         return (
-          <FormControl fullWidth key={id}>
+          <FormControl fullWidth key={_id}>
             <TextField
               multiline
               rows={textAreaRow}
@@ -74,7 +74,7 @@ function FormCanvas({ fields, removeField, isEdit }) {
         );
       case 'checkbox':
         return (
-          <FormControl key={id}>
+          <FormControl key={_id}>
             <FormLabel>{name}</FormLabel>
             {options &&
               options.map(option => (
@@ -108,7 +108,7 @@ function FormCanvas({ fields, removeField, isEdit }) {
         );
       case 'datepicker':
         return (
-          <FormControl key={id}>
+          <FormControl key={_id}>
             <DatePicker
               label={name}
               onChange={() => {}}
@@ -121,9 +121,9 @@ function FormCanvas({ fields, removeField, isEdit }) {
         );
       case 'dropdown':
         return (
-          <FormControl key={id} fullWidth>
-            <InputLabel id={id}>{name}</InputLabel>
-            <Select labelId={id} label={name} required={required}>
+          <FormControl key={_id} fullWidth>
+            <InputLabel id={_id}>{name}</InputLabel>
+            <Select labelId={_id} label={name} required={required}>
               {options.map(option => {
                 return (
                   <MenuItem key={option} value={option}>
@@ -151,7 +151,7 @@ function FormCanvas({ fields, removeField, isEdit }) {
             <IconButton
               disabled={!isEdit}
               aria-label="delete"
-              onClick={() => removeField(field.id)}
+              onClick={() => removeField(field._id)}
             >
               <DeleteIcon />
             </IconButton>

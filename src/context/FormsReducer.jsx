@@ -3,7 +3,7 @@ function formsReducer(state, action) {
     case 'GET_FORMS':
       return [...action.payload];
     case 'GET_FORM_BY_ID':
-      return state.filter(form => form.id === action.payload);
+      return state.filter(form => form._id === action.payload);
     case 'ADD_FORM':
       return [...state, action.payload];
     case 'EDIT_FORM':
@@ -11,7 +11,7 @@ function formsReducer(state, action) {
         form.id === action.payload.id ? action.payload : form
       );
     case 'DELETE_FORM':
-      return state.filter(form => form.id !== action.payload);
+      return state.filter(form => form._id !== action.payload);
     default:
       return state;
   }

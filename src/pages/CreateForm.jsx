@@ -18,7 +18,7 @@ function CreateForm() {
   });
 
   const [form, setForm] = useState({
-    id: uuidv4(),
+    _id: uuidv4(),
     name: '',
     fields: [],
   });
