@@ -3,6 +3,11 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 const FormSchema = new Schema(
   {
+    _id: {
+      type: Schema.Types.ObjectId,
+      required: false,
+      trim: true,
+    },
     name: {
       type: String,
       required: true,
