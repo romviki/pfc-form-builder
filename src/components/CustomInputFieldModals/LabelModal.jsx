@@ -1,28 +1,23 @@
-import { useContext, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import { GlobalContext } from '../../context/GlobalContext';
+import CloseIcon from '@mui/icons-material/Close';
 import {
   Button,
   Checkbox,
-  FormControl,
   FormControlLabel,
   Grid,
   Modal,
   TextField,
   Typography,
-  InputLabel,
-  Select,
-  MenuItem,
 } from '@mui/material';
-import { Box } from '@mui/system';
 import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
+import { Box } from '@mui/system';
+import { useContext, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { GlobalContext } from '../../context/GlobalContext';
 
 export default function LabelModal({ title, type, addField }) {
   const initialLabelProperties = {
     id: uuidv4(),
     type,
-    // name: '',
     labelValue: '',
     required: false,
   };
@@ -32,8 +27,7 @@ export default function LabelModal({ title, type, addField }) {
     initialLabelProperties
   );
 
-  const { error, dispatch } = useContext(GlobalContext);
-  // const [ labelNameError, setLabelNameError ] = useState(false);
+  const { dispatch } = useContext(GlobalContext);
   const [showLabelError, setShowLabelError] = useState(false);
 
   const onTextInputChange = e => {
@@ -69,12 +63,6 @@ export default function LabelModal({ title, type, addField }) {
   const validateLabelForm = () => {
     let isValidated = true;
 
-    // if (!labelProperties.name) {
-    //   isValidated = false;
-    // 	setLabelNameError(true);
-    //   dispatch({ type: 'SET_ERROR', payload: 'Label must have a name' });
-    // } else
-
     if (!labelProperties.labelValue) {
       isValidated = false;
       setShowLabelError(true);
@@ -83,14 +71,6 @@ export default function LabelModal({ title, type, addField }) {
 
     return isValidated;
   };
-
-  // const cleanInputForm = () => {
-  // 	const tempInput = { ...labelProperties };
-
-  // 	tempInput.name && tempInput.name.trim();
-
-  // 	return tempInput;
-  // }
 
   return (
     <Box sx={{ marginBottom: 2 }}>

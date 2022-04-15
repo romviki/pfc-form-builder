@@ -18,7 +18,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 function FormCanvas({ fields, removeField, isEdit }) {
   const switchFormControl = ({
-    _id,
+    id,
     name,
     type,
     required,
@@ -45,7 +45,7 @@ function FormCanvas({ fields, removeField, isEdit }) {
         );
       case 'text':
         return (
-          <FormControl fullWidth key={_id}>
+          <FormControl fullWidth key={id}>
             <TextField
               label={name}
               variant="outlined"
@@ -59,7 +59,7 @@ function FormCanvas({ fields, removeField, isEdit }) {
         );
       case 'textarea':
         return (
-          <FormControl fullWidth key={_id}>
+          <FormControl fullWidth key={id}>
             <TextField
               multiline
               rows={textAreaRow}
@@ -74,7 +74,7 @@ function FormCanvas({ fields, removeField, isEdit }) {
         );
       case 'checkbox':
         return (
-          <FormControl key={_id}>
+          <FormControl key={id}>
             <FormLabel>{name}</FormLabel>
             {options &&
               options.map(option => (
@@ -108,7 +108,7 @@ function FormCanvas({ fields, removeField, isEdit }) {
         );
       case 'datepicker':
         return (
-          <FormControl key={_id}>
+          <FormControl key={id}>
             <DatePicker
               label={name}
               onChange={() => {}}
@@ -121,9 +121,9 @@ function FormCanvas({ fields, removeField, isEdit }) {
         );
       case 'dropdown':
         return (
-          <FormControl key={_id} fullWidth>
-            <InputLabel id={_id}>{name}</InputLabel>
-            <Select labelId={_id} label={name} required={required}>
+          <FormControl key={id} fullWidth>
+            <InputLabel id={id}>{name}</InputLabel>
+            <Select labelId={id} label={name} required={required}>
               {options.map(option => {
                 return (
                   <MenuItem key={option} value={option}>
@@ -146,12 +146,17 @@ function FormCanvas({ fields, removeField, isEdit }) {
       </Typography>
 
       {fields.map(field => (
-        <Stack direction={'row'} spacing={1} sx={{ marginBottom: 2 }}>
+        <Stack
+          direction={'row'}
+          spacing={1}
+          sx={{ marginBottom: 2 }}
+          key={field.id}
+        >
           {isEdit && (
             <IconButton
               disabled={!isEdit}
               aria-label="delete"
-              onClick={() => removeField(field._id)}
+              onClick={() => removeField(field.id)}
             >
               <DeleteIcon />
             </IconButton>

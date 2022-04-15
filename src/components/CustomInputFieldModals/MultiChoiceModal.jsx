@@ -29,7 +29,7 @@ export default function MultiChoiceModal({ title, type, addField }) {
     initialInputProperties
   );
 
-  const { error, dispatch } = useContext(GlobalContext);
+  const { dispatch } = useContext(GlobalContext);
   const [inputNameError, setInputNameError] = useState(false);
 
   const onTextInputChange = e => {

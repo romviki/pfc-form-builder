@@ -24,7 +24,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "json-server --watch db.json --port 8000 --routes routes.json",
+    "server": "npm run start --prefix api",
     "dev": "concurrently \"npm run server\" \"npm start\""
   },
   "eslintConfig": {
@@ -49,5 +49,5 @@
     "concurrently": "^7.0.0",
     "json-server": "^0.17.0"
   },
-  "proxy": "http://localhost:8000"
+  "proxy": "http://localhost:5000"
 }

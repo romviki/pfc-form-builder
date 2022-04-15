@@ -29,12 +29,12 @@ function Dashboard() {
   const navigate = useNavigate();
 
   const deleteForm = async form => {
-    if (form.id) {
+    if (form._id) {
       const confirmed = window.confirm('Are you sure to discard the form?');
 
       if (confirmed) {
-        await executeFetch(null, form.id);
-        dispatch({ type: 'DELETE_FORM', payload: form.id });
+        await executeFetch(null, form._id);
+        dispatch({ type: 'DELETE_FORM', payload: form._id });
       }
 
       return;

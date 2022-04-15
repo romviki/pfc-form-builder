@@ -8,7 +8,7 @@ function formsReducer(state, action) {
       return [...state, action.payload];
     case 'EDIT_FORM':
       return state.map(form =>
-        form.id === action.payload.id ? action.payload : form
+        form._id === action.payload._id ? action.payload : form
       );
     case 'DELETE_FORM':
       return state.filter(form => form._id !== action.payload);

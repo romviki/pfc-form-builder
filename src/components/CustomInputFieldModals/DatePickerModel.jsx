@@ -28,7 +28,7 @@ export default function DatePickerModal({ title, type, addField }) {
     initialInputProperties
   );
 
-  const { error, dispatch } = useContext(GlobalContext);
+  const { dispatch } = useContext(GlobalContext);
   const [inputNameError, setInputNameError] = useState(false);
 
   const onTextInputChange = e => {
@@ -64,7 +64,6 @@ export default function DatePickerModal({ title, type, addField }) {
 
     let cleanField = cleanUp();
     addField(cleanField);
-    console.log(`ADDED - ${title} Input :>>`, cleanField);
     setInputProperties(initialInputProperties);
     setOpenModal(false);
   };
