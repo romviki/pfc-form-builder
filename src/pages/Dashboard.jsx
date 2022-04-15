@@ -21,9 +21,9 @@ function Dashboard() {
   const navigate = useNavigate();
 
   const deleteForm = form => () => {
-    if (form.id) {
+    if (form._id) {
       //event.preventDefault();
-      const url = '/forms/' + form.id;
+      const url = '/api/forms/' + form._id;
       const confirmed = window.confirm('Are you sure to discard the form?');
       if (confirmed) {
         fetch(url, { method: 'DELETE' })
@@ -31,7 +31,7 @@ function Dashboard() {
           .catch(e => {
             console.log(e);
           });
-        dispatch({ type: 'DELETE_FORM', payload: form.id });
+        dispatch({ type: 'DELETE_FORM', payload: form._id });
       }
 
       //navigate('/');
@@ -73,14 +73,14 @@ function Dashboard() {
           </IconButton>
           <IconButton
             aria-label="edit"
-            onClick={() => navigate(`./edit/${form.id}`)}
+            onClick={() => navigate(`./edit/${form._id}`)}
           >
             <EditIcon />
           </IconButton>
           <Link
             underline="none"
             component={RouterLink}
-            to={`/preview/${form.id}`}
+            to={`/preview/${form._id}`}
           >
             {form.name}
           </Link>
