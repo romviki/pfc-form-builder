@@ -14,12 +14,11 @@ import { useContext, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { GlobalContext } from '../../context/GlobalContext';
 
-export default function RadioModal({ title, type, addField }) {
+export default function DatePickerModal({ title, type, addField }) {
   const initialInputProperties = {
     id: uuidv4(),
     type,
     name: '',
-    options: [''],
     required: false,
     customErrorMessage: '',
   };
@@ -46,42 +45,10 @@ export default function RadioModal({ title, type, addField }) {
     }));
   };
 
-  const onOptionTextChange = (e, index) => {
-    const list = [...inputProperties.options];
-    list[index] = e.target.value;
-    setInputProperties(prev => ({
-      ...prev,
-      options: list,
-    }));
-  };
-
-  const onAddOption = e => {
-    const list = [...inputProperties.options, ''];
-    setInputProperties(prev => ({
-      ...prev,
-      options: list,
-    }));
-  };
-
-  const onRemoveOption = index => {
-    const list = [...inputProperties.options];
-    list.splice(index, 1);
-    setInputProperties(prev => ({
-      ...prev,
-      options: list,
-    }));
-  };
-
   const validate = () => {
     if (!inputProperties.name) {
       setInputNameError(true);
       dispatch({ type: 'SET_ERROR', payload: 'Input must have a name' });
-      return false;
-    }
-
-    let emptyOption = inputProperties.options.filter(option => option === '');
-    if (emptyOption.length > 0) {
-      dispatch({ type: 'SET_ERROR', payload: 'One or more options is empty' });
       return false;
     }
 
@@ -97,6 +64,7 @@ export default function RadioModal({ title, type, addField }) {
 
     let cleanField = cleanUp();
     addField(cleanField);
+    console.log(`ADDED - ${title} Input :>>`, cleanField);
     setInputProperties(initialInputProperties);
     setOpenModal(false);
   };
@@ -180,50 +148,6 @@ export default function RadioModal({ title, type, addField }) {
               autoComplete="off"
               sx={{ marginBottom: 2 }}
             />
-            {inputProperties.options.map((option, index) => (
-              <Box
-                key={index}
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  marginBottom: 2,
-                }}
-              >
-                <TextField
-                  label="Option"
-                  value={option}
-                  type="text"
-                  onChange={e => onOptionTextChange(e, index)}
-                  autoComplete="off"
-                  sx={{
-                    marginLeft: 2,
-                    marginRight: 2,
-                    flexGrow: 1,
-                  }}
-                />
-                {inputProperties.options.length > 1 && (
-                  <Button
-                    variant="outlined"
-                    type="button"
-                    color="error"
-                    onClick={() => onRemoveOption(index)}
-                  >
-                    Remove
-                  </Button>
-                )}
-              </Box>
-            ))}
-
-            <Button
-              variant="outlined"
-              type="button"
-              onClick={() => onAddOption()}
-              sx={{
-                marginBottom: 2,
-              }}
-            >
-              Add Option
-            </Button>
 
             <TextField
               id="customErrorMessage"

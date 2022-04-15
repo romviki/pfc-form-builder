@@ -1,4 +1,3 @@
-import CloseIcon from '@mui/icons-material/Close';
 import {
   Button,
   Checkbox,
@@ -9,26 +8,29 @@ import {
   Typography,
 } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 import { Box } from '@mui/system';
 import { useContext, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { GlobalContext } from '../../context/GlobalContext';
 
-const CheckboxModal = ({ title, type, addField }) => {
+export default function MultiChoiceModal({ title, type, addField }) {
   const initialInputProperties = {
     id: uuidv4(),
     type,
     name: '',
-    checked: false,
+    options: [''],
     required: false,
     customErrorMessage: '',
   };
 
-  const { error, dispatch } = useContext(GlobalContext);
   const [openModal, setOpenModal] = useState(false);
   const [inputProperties, setInputProperties] = useState(
     initialInputProperties
   );
+
+  const { error, dispatch } = useContext(GlobalContext);
+  const [inputNameError, setInputNameError] = useState(false);
 
   const onTextInputChange = e => {
     setInputProperties(prev => ({
@@ -37,46 +39,73 @@ const CheckboxModal = ({ title, type, addField }) => {
     }));
   };
 
-  const onCheckboxChange = e => {
+  const onRequiredCheckboxChange = e => {
     setInputProperties(prev => ({
       ...prev,
       [e.target.id]: e.target.checked,
     }));
   };
 
-  const cleanInputForm = () => {
-    const tempInput = { ...inputProperties };
-
-    tempInput.name && tempInput.name.trim();
-    tempInput.customErrorMessage && tempInput.customErrorMessage.trim();
-
-    return tempInput;
+  const onOptionTextChange = (e, index) => {
+    const list = [...inputProperties.options];
+    list[index] = e.target.value;
+    setInputProperties(prev => ({
+      ...prev,
+      options: list,
+    }));
   };
 
-  const validateInputForm = () => {
-    let isValidated = false;
+  const onAddOption = e => {
+    const list = [...inputProperties.options, ''];
+    setInputProperties(prev => ({
+      ...prev,
+      options: list,
+    }));
+  };
 
+  const onRemoveOption = index => {
+    const list = [...inputProperties.options];
+    list.splice(index, 1);
+    setInputProperties(prev => ({
+      ...prev,
+      options: list,
+    }));
+  };
+
+  const validate = () => {
     if (!inputProperties.name) {
-      isValidated = false;
+      setInputNameError(true);
       dispatch({ type: 'SET_ERROR', payload: 'Input must have a name' });
-    } else {
-      isValidated = true;
+      return false;
     }
 
-    return isValidated;
+    let emptyOption = inputProperties.options.filter(option => option === '');
+    if (emptyOption.length > 0) {
+      dispatch({ type: 'SET_ERROR', payload: 'One or more options is empty' });
+      return false;
+    }
+
+    return true;
   };
 
   const onSubmit = e => {
     e.preventDefault();
+    // reset errors
+    setInputNameError(false);
 
-    if (validateInputForm()) {
-      let cleanedInputField = cleanInputForm();
-      addField(cleanedInputField);
+    if (!validate()) return;
 
-      setInputProperties(initialInputProperties);
-      setOpenModal(false);
-      return;
-    }
+    let cleanField = cleanUp();
+    addField(cleanField);
+    setInputProperties(initialInputProperties);
+    setOpenModal(false);
+  };
+
+  const cleanUp = () => {
+    const tempInput = { ...inputProperties };
+    // Add clean up later
+    !tempInput.customErrorMessage && delete tempInput.customErrorMessage;
+    return tempInput;
   };
 
   return (
@@ -105,7 +134,15 @@ const CheckboxModal = ({ title, type, addField }) => {
           }}
         >
           {/* Modal title */}
-          <Grid container justifyContent="flex-start">
+          <Grid container justifyContent="space-between">
+            <Typography
+              id="modal-modal-title"
+              variant="h6"
+              component="h2"
+              marginBottom={2}
+            >
+              Create {title}
+            </Typography>
             <Box>
               <IconButton
                 size="small"
@@ -116,14 +153,6 @@ const CheckboxModal = ({ title, type, addField }) => {
                 <CloseIcon fontSize="small" />
               </IconButton>
             </Box>
-            <Typography
-              id="modal-modal-title"
-              variant="h6"
-              component="h2"
-              marginBottom={2}
-            >
-              Create {title}
-            </Typography>
           </Grid>
 
           {/* Modal content */}
@@ -137,7 +166,7 @@ const CheckboxModal = ({ title, type, addField }) => {
           >
             {/* Input properties form */}
             <Typography variant="subtitle1" component="h3" marginBottom={2}>
-              Input Properties
+              Properties
             </Typography>
 
             <TextField
@@ -145,46 +174,56 @@ const CheckboxModal = ({ title, type, addField }) => {
               label="Input Name"
               variant="outlined"
               value={inputProperties.name}
-              error={!!error}
+              error={!!inputNameError}
               onChange={onTextInputChange}
               required
-              sx={{
-                marginBottom: 2,
-              }}
+              autoComplete="off"
+              sx={{ marginBottom: 2 }}
             />
-
-            <FormControlLabel
-              control={
-                <Checkbox
-                  id="checked"
-                  onChange={onCheckboxChange}
-                  checked={inputProperties.checked}
+            {inputProperties.options.map((option, index) => (
+              <Box
+                key={index}
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  marginBottom: 2,
+                }}
+              >
+                <TextField
+                  label="Option"
+                  value={option}
+                  type="text"
+                  onChange={e => onOptionTextChange(e, index)}
+                  autoComplete="off"
+                  sx={{
+                    marginLeft: 2,
+                    marginRight: 2,
+                    flexGrow: 1,
+                  }}
                 />
-              }
-              label="Checked?"
+                {inputProperties.options.length > 1 && (
+                  <Button
+                    variant="outlined"
+                    type="button"
+                    color="error"
+                    onClick={() => onRemoveOption(index)}
+                  >
+                    Remove
+                  </Button>
+                )}
+              </Box>
+            ))}
+
+            <Button
+              variant="outlined"
+              type="button"
+              onClick={() => onAddOption()}
               sx={{
                 marginBottom: 2,
               }}
-            />
-
-            {/* Input validation form */}
-            <Typography variant="subtitle1" component="h3" marginBottom={2}>
-              Input Validations
-            </Typography>
-
-            <FormControlLabel
-              control={
-                <Checkbox
-                  id="required"
-                  onChange={onCheckboxChange}
-                  checked={inputProperties.required}
-                />
-              }
-              label="Required?"
-              sx={{
-                marginBottom: 2,
-              }}
-            />
+            >
+              Add Option
+            </Button>
 
             <TextField
               id="customErrorMessage"
@@ -192,6 +231,21 @@ const CheckboxModal = ({ title, type, addField }) => {
               value={inputProperties.customErrorMessage}
               type="text"
               onChange={onTextInputChange}
+              autoComplete="off"
+              sx={{
+                marginBottom: 2,
+              }}
+            />
+
+            <FormControlLabel
+              control={
+                <Checkbox
+                  id="required"
+                  onChange={onRequiredCheckboxChange}
+                  checked={inputProperties.required}
+                />
+              }
+              label="Required?"
               sx={{
                 marginBottom: 2,
               }}
@@ -221,6 +275,4 @@ const CheckboxModal = ({ title, type, addField }) => {
       </Modal>
     </Box>
   );
-};
-
-export default CheckboxModal;
+}
