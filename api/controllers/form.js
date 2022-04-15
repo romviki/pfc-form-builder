@@ -1,25 +1,82 @@
-const express = require('express');
+import express from 'express';
 
 // Import models
-const Form = require('../models/form');
+import Form from '../models/form';
 
 // Form controllers
-module.exports = {
-  addForm: async (req, res) => {
-    const { form } = req.body;
-    try {
-      console.log(`form added ${form}`);
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  },
+export const GetForm = async (req, res) => {
+  const id = req.params.id;
+  
+  try {
+    Form.findById(id, (err, form) => {
+      if(err) {
+        console.log(err);
+      }
 
-  deleteForm: async (req, res) => {
-    const { formId } = req.body;
-    try {
-      console.log(`form deleted ${formId}`);
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  },
+      res.status(200).json(form);
+    })
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+export const AddForm = async (req, res) => {
+  try {
+    const newForm = new Form({
+      name: req.body.name,
+      fields: req.body.fields
+    });
+
+    Form.create(newForm, (err, form) => {
+      if(err) {
+        console.error(err)
+      }
+
+      console.log(`form added ${form}`);
+      res.status(200).json(form);
+    })
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+export const EditForm = async (req, res) => {
+  const id = req.params.id;
+  const updates = {
+    name: req.body.name,
+    fields: req.body.fields,
+    dateUpdated: Date.now()
+  };
+
+  try {
+    Form.findByIdAndUpdate(id, updates, { new: true }, (err, form) => {
+      if(err) {
+        console.error(err)
+      }
+
+      console.log(`Updated Form: ${id}`);
+      res.status(200).json(form);
+    });
+
+    console.log(`form deleted ${id}`);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+export const DeleteForm = async (req, res) => {
+  const id = req.params.id;
+  try {
+
+    Form.findByIdAndDelete(id, (err, form) => {
+      if(err) {
+        console.error(err)
+      }
+
+      console.log(`form deleted ${id}`);
+      res.status(200).json(form);
+    })
+  } catch (err) {
+    res.status(500).json(err);
+  }
 };

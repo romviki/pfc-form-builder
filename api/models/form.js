@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema; // change variable name
+import mongoose from 'mongoose';
 
+const Schema = mongoose.Schema;
 const FormSchema = new Schema(
   {
     name: {
@@ -8,7 +8,7 @@ const FormSchema = new Schema(
       required: true,
       trim: true,
     },
-    fields: [mongoose.Schema.Types.Mixed],
+    fields: [Schema.Types.Mixed],
     dateUpdated: {
       type: Date,
       default: Date.now,
@@ -23,5 +23,5 @@ const FormSchema = new Schema(
   }
 );
 
-const Comment = mongoose.model('Form', FormSchema);
-module.exports = Comment;
+const Model = mongoose.model('Form', FormSchema);
+export default Model;

@@ -1,11 +1,17 @@
-const express = require('express');
+
+import {
+  GetForm,
+  AddForm,
+  EditForm,
+  DeleteForm
+} from '../controllers/form';
+import express from 'express';
 const router = express.Router();
 
 // import form controllers
-const formControllers = require('../controllers/form');
+router.get('/:id', GetForm);
+router.post('/', AddForm);
+router.put('/:id', EditForm);
+router.delete('/:id', DeleteForm);
 
-router.post('/addForm', formControllers.addForm);
-
-router.delete('/deleteForm', formControllers.deleteForm);
-
-module.exports = router;
+export default router;
