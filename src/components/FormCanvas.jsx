@@ -20,7 +20,7 @@ import CheckboxInput from './CustomInputFields/CheckboxInput';
 
 function FormCanvas({ fields, removeField }) {
   const switchFormControl = ({
-    id,
+    _id,
     name,
     type,
     required,
@@ -52,7 +52,7 @@ function FormCanvas({ fields, removeField }) {
         );
       case 'text':
         return (
-          <FormControl fullWidth key={id}>
+          <FormControl fullWidth key={_id}>
             <TextField
               label={name}
               variant="outlined"
@@ -66,7 +66,7 @@ function FormCanvas({ fields, removeField }) {
         );
       case 'textarea':
         return (
-          <FormControl fullWidth key={id}>
+          <FormControl fullWidth key={_id}>
             <TextField
               multiline
               rows={textAreaRow}
@@ -81,7 +81,7 @@ function FormCanvas({ fields, removeField }) {
         );
       case 'checkbox':
         return (
-          <FormControl key={id}>
+          <FormControl key={_id}>
             <FormLabel>{name}</FormLabel>
               {options && options.map((option) => (
                 <FormControlLabel
@@ -113,7 +113,7 @@ function FormCanvas({ fields, removeField }) {
         )
       case 'datepicker':
         return (
-          <FormControl key={id}>
+          <FormControl key={_id}>
             <DatePicker
               label={name}
               onChange={() => {}}
@@ -129,10 +129,10 @@ function FormCanvas({ fields, removeField }) {
         );
       case 'dropdown':
         return (
-          <FormControl key={id} fullWidth>
-            <InputLabel id={id}>{name}</InputLabel>
+          <FormControl key={_id} fullWidth>
+            <InputLabel id={_id}>{name}</InputLabel>
             <Select
-              labelId={id}
+              labelId={_id}
               label={name}
               required={required}
             >
@@ -165,7 +165,7 @@ function FormCanvas({ fields, removeField }) {
         >
           <IconButton
             aria-label="delete"
-            onClick={() => removeField(field.id)}
+            onClick={() => removeField(field._id)}
           >
             <DeleteIcon />
           </IconButton>

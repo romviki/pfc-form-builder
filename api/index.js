@@ -6,6 +6,7 @@ import logger from 'morgan';
 import mongoose from 'mongoose';
 import mongoSanitize from 'express-mongo-sanitize';
 import dotenv from 'dotenv';
+import cors from 'cors';
 import formRoutes from './routes/form';
 
 // Load Env
@@ -29,6 +30,9 @@ mongoDB.on('error', console.error.bind(console, 'Connection Error: '));
 mongoDB.once('open', () => {
   console.log('Successfully connected to MongoDB...');
 });
+
+// Apply CORS
+app.use(cors());
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // MIDDLEWARE
