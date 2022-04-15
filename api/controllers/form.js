@@ -4,6 +4,20 @@ import express from 'express';
 import Form from '../models/form';
 
 // Form controllers
+export const GetForms = async (req, res) => {
+  try {
+    Form.find({}, (err, form) => {
+      if(err) {
+        console.log(err);
+      }
+
+      res.status(200).json(form);
+    })
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
 export const GetForm = async (req, res) => {
   const id = req.params.id;
   

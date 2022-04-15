@@ -1,5 +1,6 @@
 
 import {
+  GetForms,
   GetForm,
   AddForm,
   EditForm,
@@ -9,6 +10,7 @@ import express from 'express';
 const router = express.Router();
 
 // import form controllers
+router.get('/', GetForms);
 router.get('/:id', GetForm);
 router.post('/', AddForm);
 router.put('/:id', EditForm);
