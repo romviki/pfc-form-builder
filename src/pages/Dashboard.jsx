@@ -33,9 +33,6 @@ function Dashboard() {
           });
         dispatch({ type: 'DELETE_FORM', payload: form._id });
       }
-
-      //navigate('/');
-      return;
     }
   };
 
