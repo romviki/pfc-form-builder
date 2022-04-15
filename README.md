@@ -63,16 +63,19 @@ More information can be found in the package.json file
 3. Install NPM packages
 
    ```bash
-   npm install
+   npm install && npm install --prefix api
    ```
 
-4. Start the development server
+4. a) Start a local MongoDB server instance with database named PFC or,
+   b) Add a .env file in the project root directory with a environment variable named MONGO_URL which has a MongoDB server URL as value
+
+5. Start the development server
 
    ```bash
-   npm start
+   npm start dev
    ```
 
-5. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+6. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 <div>
 <p align="right">(<a href="#top">back to top</a>)</p>
