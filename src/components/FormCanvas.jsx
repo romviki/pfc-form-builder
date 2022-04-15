@@ -16,7 +16,7 @@ import {
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-function FormCanvas({ fields, removeField }) {
+function FormCanvas({ fields, removeField, isEdit }) {
   const switchFormControl = ({
     id,
     name,
@@ -147,9 +147,15 @@ function FormCanvas({ fields, removeField }) {
 
       {fields.map(field => (
         <Stack direction={'row'} spacing={1} sx={{ marginBottom: 2 }}>
-          <IconButton aria-label="delete" onClick={() => removeField(field.id)}>
-            <DeleteIcon />
-          </IconButton>
+          {isEdit && (
+            <IconButton
+              disabled={!isEdit}
+              aria-label="delete"
+              onClick={() => removeField(field.id)}
+            >
+              <DeleteIcon />
+            </IconButton>
+          )}
           {switchFormControl(field)}
         </Stack>
       ))}

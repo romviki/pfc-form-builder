@@ -111,6 +111,7 @@ function CreateForm() {
           />
 
           <FormCanvas
+            isEdit={true}
             fields={form.fields}
             removeField={fieldId => removeField(fieldId)}
           />

@@ -152,7 +152,11 @@ const PreviewForm = () => {
               />
             )}
 
-            <FormCanvas fields={form.fields} removeField={removeField} />
+            <FormCanvas
+              fields={form.fields}
+              removeField={removeField}
+              isEdit={isEdit}
+            />
           </Grid>
         )}
       </Grid>
