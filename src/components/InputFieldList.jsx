@@ -5,7 +5,8 @@ import DropdownModal from './CustomInputFieldModals/DropdownModal';
 import TextFieldModal from './CustomInputFieldModals/TextFieldModal';
 import TextAreaModal from './CustomInputFieldModals/TextAreaModal';
 import LabelModal from './CustomInputFieldModals/LabelModal';
-import RadioModal from './CustomInputFieldModals/RadioModal';
+import MultiChoiceModal from './CustomInputFieldModals/MultiChoiceModal';
+import DatePickerModal from './CustomInputFieldModals/DatePickerModel';
 
 function InputFieldList({ addField }) {
   return (
@@ -20,21 +21,29 @@ function InputFieldList({ addField }) {
 
       <TextAreaModal title="Text Area" type="textarea" addField={addField} />
 
-      <CheckboxModal title="Checkbox" type="checkbox" addField={addField} />
+      <MultiChoiceModal 
+        title="Checkbox"
+        type="checkbox"
+        addField={addField}
+      />
 
-      <RadioModal
+      <MultiChoiceModal
         title="Radio Buttons"
         type="radio"
         addField={addField}
       />
 
-      <InputFieldModal
-        title="Date picker"
+      <DatePickerModal
+        title="Date Picker"
         type="datepicker"
         addField={addField}
       />
 
-      <DropdownModal title="Dropdown" type="dropdown" addField={addField} />
+      <MultiChoiceModal
+        title="Dropdown"
+        type="dropdown"
+        addField={addField} 
+      />
     </>
   );
 }
