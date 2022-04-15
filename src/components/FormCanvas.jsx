@@ -11,14 +11,14 @@ import {
   TextField,
   Typography,
   Radio,
-  RadioGroup
+  RadioGroup,
 } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-function FormCanvas({ fields, removeField }) {
+function FormCanvas({ fields, removeField, isEdit }) {
   const switchFormControl = ({
-    _id,
+    id,
     name,
     type,
     required,
@@ -37,20 +37,15 @@ function FormCanvas({ fields, removeField }) {
     switch (type) {
       case 'label':
         return (
-          <FormControl
-            error={required}
-            required={required}
-          >
-            <FormLabel component="legend" 
-              sx={{ marginTop: 1 }}
-            >
+          <FormControl error={required} required={required}>
+            <FormLabel component="legend" sx={{ marginTop: 1 }}>
               {labelValue}
             </FormLabel>
           </FormControl>
         );
       case 'text':
         return (
-          <FormControl fullWidth key={_id}>
+          <FormControl fullWidth key={id}>
             <TextField
               label={name}
               variant="outlined"
@@ -64,7 +59,7 @@ function FormCanvas({ fields, removeField }) {
         );
       case 'textarea':
         return (
-          <FormControl fullWidth key={_id}>
+          <FormControl fullWidth key={id}>
             <TextField
               multiline
               rows={textAreaRow}
@@ -79,9 +74,10 @@ function FormCanvas({ fields, removeField }) {
         );
       case 'checkbox':
         return (
-          <FormControl key={_id}>
+          <FormControl key={id}>
             <FormLabel>{name}</FormLabel>
-              {options && options.map((option) => (
+            {options &&
+              options.map(option => (
                 <FormControlLabel
                   label={option}
                   control={<Checkbox required={required} />}
@@ -95,31 +91,29 @@ function FormCanvas({ fields, removeField }) {
           <FormControl>
             <FormLabel>{name}</FormLabel>
             <RadioGroup>
-              {options && options.map((option) => (
-                <FormControlLabel 
-                  value={option} 
-                  control={<Radio />}
-                  label={option}
-                  disabled
-                  sx = {{
-                    marginLeft: 2
-                  }}
-                />
-              ))}
+              {options &&
+                options.map(option => (
+                  <FormControlLabel
+                    value={option}
+                    control={<Radio />}
+                    label={option}
+                    disabled
+                    sx={{
+                      marginLeft: 2,
+                    }}
+                  />
+                ))}
             </RadioGroup>
           </FormControl>
-        )
+        );
       case 'datepicker':
         return (
-          <FormControl key={_id}>
+          <FormControl key={id}>
             <DatePicker
               label={name}
               onChange={() => {}}
               renderInput={params => (
-                <TextField
-                  helperText={customErrorMessage}
-                  {...params}
-                />
+                <TextField helperText={customErrorMessage} {...params} />
               )}
               disabled
             />
@@ -127,13 +121,9 @@ function FormCanvas({ fields, removeField }) {
         );
       case 'dropdown':
         return (
-          <FormControl key={_id} fullWidth>
-            <InputLabel id={_id}>{name}</InputLabel>
-            <Select
-              labelId={_id}
-              label={name}
-              required={required}
-            >
+          <FormControl key={id} fullWidth>
+            <InputLabel id={id}>{name}</InputLabel>
+            <Select labelId={id} label={name} required={required}>
               {options.map(option => {
                 return (
                   <MenuItem key={option} value={option}>
@@ -148,25 +138,29 @@ function FormCanvas({ fields, removeField }) {
       default:
         return null;
     }
-  }
+  };
   return (
     <>
       <Typography variant="h6" marginBottom={2}>
         Canvas
       </Typography>
 
-      {fields.map((field) => (
+      {fields.map(field => (
         <Stack
           direction={'row'}
           spacing={1}
           sx={{ marginBottom: 2 }}
+          key={field.id}
         >
-          <IconButton
-            aria-label="delete"
-            onClick={() => removeField(field._id)}
-          >
-            <DeleteIcon />
-          </IconButton>
+          {isEdit && (
+            <IconButton
+              disabled={!isEdit}
+              aria-label="delete"
+              onClick={() => removeField(field.id)}
+            >
+              <DeleteIcon />
+            </IconButton>
+          )}
           {switchFormControl(field)}
         </Stack>
       ))}

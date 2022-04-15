@@ -1,110 +1,91 @@
+import CloseIcon from '@mui/icons-material/Close';
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Grid,
+  Modal,
+  TextField,
+  Typography,
+} from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import { Box } from '@mui/system';
 import { useContext, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { GlobalContext } from '../../context/GlobalContext';
-import {
-	Button,
- 	Checkbox,
-	FormControl,
-	FormControlLabel,
-	Grid,
-	Modal,
-	TextField,
-	Typography,
-	InputLabel,
-	Select,
-	MenuItem
-} from '@mui/material'
-import { Box } from '@mui/system';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
 
 export default function LabelModal({ title, type, addField }) {
-	const initialLabelProperties = {
-		id: uuidv4(),
-		type,
-		// name: '',
-		labelValue: '',
-		required: false,
-	};
+  const initialLabelProperties = {
+    id: uuidv4(),
+    type,
+    labelValue: '',
+    required: false,
+  };
 
-	const [openModal, setOpenModal] = useState(false);
-	const [labelProperties, setLabelProperties] = useState(initialLabelProperties);
+  const [openModal, setOpenModal] = useState(false);
+  const [labelProperties, setLabelProperties] = useState(
+    initialLabelProperties
+  );
 
-	const { error, dispatch } = useContext(GlobalContext);
-	// const [ labelNameError, setLabelNameError ] = useState(false);
-	const [ showLabelError, setShowLabelError ] = useState(false);
+  const { dispatch } = useContext(GlobalContext);
+  const [showLabelError, setShowLabelError] = useState(false);
 
-	const onTextInputChange = e => {
+  const onTextInputChange = e => {
     setLabelProperties(prev => ({
       ...prev,
       [e.target.id]: e.target.value,
     }));
   };
 
-	const onRequiredCheckboxChange = e => {
+  const onRequiredCheckboxChange = e => {
     setLabelProperties(prev => ({
       ...prev,
       [e.target.id]: e.target.checked,
     }));
   };
 
-	const onSubmit = e => {
-		e.preventDefault();
+  const onSubmit = e => {
+    e.preventDefault();
 
-		// setLabelNameError(false);
-		setShowLabelError(false);
+    // setLabelNameError(false);
+    setShowLabelError(false);
 
-		if (validateLabelForm()) {
+    if (validateLabelForm()) {
       // let cleanedLabelField = cleanInputForm();
       addField(labelProperties);
-      console.log(`ADDED - ${title} Label :>>`, labelProperties);
 
       setLabelProperties(initialLabelProperties);
       setOpenModal(false);
       return;
     }
-	}
+  };
 
-	const validateLabelForm = () => {
-		let isValidated = true;
+  const validateLabelForm = () => {
+    let isValidated = true;
 
-		// if (!labelProperties.name) {
-    //   isValidated = false;
-		// 	setLabelNameError(true);
-    //   dispatch({ type: 'SET_ERROR', payload: 'Label must have a name' });
-    // } else 
-		
-		if (!labelProperties.labelValue) {
+    if (!labelProperties.labelValue) {
       isValidated = false;
-			setShowLabelError(true);
+      setShowLabelError(true);
       dispatch({ type: 'SET_ERROR', payload: 'Label must have a value' });
     }
 
-		return isValidated;
-	}
+    return isValidated;
+  };
 
-	// const cleanInputForm = () => {
-	// 	const tempInput = { ...labelProperties };
+  return (
+    <Box sx={{ marginBottom: 2 }}>
+      <Button variant="contained" onClick={() => setOpenModal(true)}>
+        {title}
+      </Button>
 
-	// 	tempInput.name && tempInput.name.trim();
-
-	// 	return tempInput;
-	// }
-
-	return (
-		<Box sx={{ marginBottom: 2 }}>
-			<Button variant="contained" onClick={() => setOpenModal(true)}>
-				{title}
-			</Button>
-
-			<Modal
-				open={openModal}
-				onClose={() => setOpenModal(false)}
-				aria-labelledby="modal-modal-title"
-				aria-describedby="modal-modal-description"
-			>
-				<Box
-					sx={{
+      <Modal
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
             position: 'absolute',
             top: '50%',
             left: '50%',
@@ -115,15 +96,16 @@ export default function LabelModal({ title, type, addField }) {
             border: '1px solid gray',
             borderRadius: '4px',
           }}
-				>
-					{/* Modal title */}
-					<Grid container justifyContent="flex-start">
-					<Box>
+        >
+          {/* Modal title */}
+          <Grid container justifyContent="flex-start">
+            <Box>
               <IconButton
                 size="small"
                 aria-label="close"
                 color="inherit"
-                onClick={() => setOpenModal(false)}>
+                onClick={() => setOpenModal(false)}
+              >
                 <CloseIcon fontSize="small" />
               </IconButton>
             </Box>
@@ -131,21 +113,22 @@ export default function LabelModal({ title, type, addField }) {
               id="modal-modal-title"
               variant="h6"
               component="h2"
-              marginBottom={2}>
+              marginBottom={2}
+            >
               Create {title}
             </Typography>
-					</Grid>
+          </Grid>
 
-					{/* Modal content */}
-					<Box
+          {/* Modal content */}
+          <Box
             sx={{
               display: 'flex',
               flexDirection: 'column',
               width: '30vw',
               justifyContent: 'space-between',
             }}
-					>
-						{/* Label properties form */}
+          >
+            {/* Label properties form */}
             <Typography variant="subtitle1" component="h3" marginBottom={2}>
               Label Properties
             </Typography>
@@ -162,7 +145,7 @@ export default function LabelModal({ title, type, addField }) {
               sx={{ marginBottom: 2 }}
             /> */}
 
-						<TextField
+            <TextField
               id="labelValue"
               label="Label Value"
               variant="outlined"
@@ -170,11 +153,11 @@ export default function LabelModal({ title, type, addField }) {
               error={!!showLabelError}
               onChange={onTextInputChange}
               required
-							autoComplete='off'
+              autoComplete="off"
               sx={{ marginBottom: 2 }}
             />
 
-						<FormControlLabel
+            <FormControlLabel
               control={
                 <Checkbox
                   id="required"
@@ -187,8 +170,8 @@ export default function LabelModal({ title, type, addField }) {
                 marginBottom: 2,
               }}
             />
-						
-						{/* Modal submit and clear buttons */}
+
+            {/* Modal submit and clear buttons */}
             <Box
               sx={{
                 display: 'flex',
@@ -207,9 +190,9 @@ export default function LabelModal({ title, type, addField }) {
                 Clear
               </Button>
             </Box>
-					</Box>
-				</Box>
-			</Modal>
-		</Box>
-	)
+          </Box>
+        </Box>
+      </Modal>
+    </Box>
+  );
 }

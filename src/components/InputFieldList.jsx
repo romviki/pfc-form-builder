@@ -1,10 +1,9 @@
 import { Typography } from '@mui/material';
-import InputFieldModal from './CustomInputFieldModals/InputFieldModal';
-import TextFieldModal from './CustomInputFieldModals/TextFieldModal';
-import TextAreaModal from './CustomInputFieldModals/TextAreaModal';
+import DatePickerModal from './CustomInputFieldModals/DatePickerModel';
 import LabelModal from './CustomInputFieldModals/LabelModal';
 import MultiChoiceModal from './CustomInputFieldModals/MultiChoiceModal';
-import DatePickerModal from './CustomInputFieldModals/DatePickerModel';
+import TextAreaModal from './CustomInputFieldModals/TextAreaModal';
+import TextFieldModal from './CustomInputFieldModals/TextFieldModal';
 
 function InputFieldList({ addField }) {
   return (
@@ -19,11 +18,7 @@ function InputFieldList({ addField }) {
 
       <TextAreaModal title="Text Area" type="textarea" addField={addField} />
 
-      <MultiChoiceModal 
-        title="Checkbox"
-        type="checkbox"
-        addField={addField}
-      />
+      <MultiChoiceModal title="Checkbox" type="checkbox" addField={addField} />
 
       <MultiChoiceModal
         title="Radio Buttons"
@@ -37,11 +32,7 @@ function InputFieldList({ addField }) {
         addField={addField}
       />
 
-      <MultiChoiceModal
-        title="Dropdown"
-        type="dropdown"
-        addField={addField} 
-      />
+      <MultiChoiceModal title="Dropdown" type="dropdown" addField={addField} />
     </>
   );
 }

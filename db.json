@@ -29,83 +29,28 @@
       ]
     },
     {
-      "id": "41857e50-355c-45a2-bd92-7377789ac3fa",
-      "name": "full form",
+      "id": "bbfe2dce-2e57-4f90-bdfc-7972dcd58f98",
+      "name": "Test",
       "fields": [
         {
-          "id": "b977e76a-2dd3-44be-9ac5-b121bf520d8d",
-          "type": "label",
-          "labelValue": "text field",
-          "required": false
-        },
-        {
-          "id": "e776f09b-98dd-49b6-9283-606974b2279d",
+          "id": "4c61f7e1-b343-48b7-a1c8-9f2c09224e21",
           "type": "text",
           "subType": "text",
-          "name": "textinput1",
-          "required": false,
-          "customErrorMessage": ""
-        },
-        {
-          "id": "67a82f32-15e7-41d2-a5d7-03c47d0711ac",
-          "type": "label",
-          "labelValue": "checkboxes",
-          "required": false
-        },
-        {
-          "id": "11244b29-462e-484e-8c1f-b2aab1bf4b29",
-          "type": "checkbox",
-          "name": "chbox1",
-          "checked": false,
-          "required": false,
-          "customErrorMessage": ""
-        },
-        {
-          "id": "29ac7292-6df8-4d7d-9d61-baea1960af55",
-          "type": "checkbox",
-          "name": "chbox2",
-          "checked": true,
-          "required": false,
-          "customErrorMessage": ""
-        },
-        {
-          "id": "9f229860-9af8-4322-a1f1-c65be920f1d9",
-          "type": "label",
-          "labelValue": "radio buttons",
-          "required": false
-        },
-        {
-          "id": "963e4121-68c1-4f2c-9804-3f7f20230deb",
-          "type": "radio",
-          "name": "radio buttons",
-          "options": [
-            "1",
-            "2",
-            "3"
-          ],
-          "required": false
-        },
-        {
-          "id": "fc95433c-b88c-4444-9122-5e6982be2e7d",
-          "type": "label",
-          "labelValue": "dropdown",
-          "required": false
-        },
-        {
-          "id": "3c7a8cf7-1669-42cd-b379-daef0c9a3276",
-          "type": "dropdown",
-          "name": "dropwdown1",
-          "dropdownOptions": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"
-          ],
-          "required": false,
-          "customErrorMessage": ""
+          "name": "Test",
+          "required": true,
+          "customErrorMessage": "Hello"
         }
       ]
+    },
+    {
+      "id": "2f114498-1b48-4771-b8ea-aa44d70495f2",
+      "name": "helloasdfs",
+      "fields": []
+    },
+    {
+      "id": "a772b564-af65-4fe0-a9e8-28355e29b34c",
+      "name": "testtest",
+      "fields": []
     }
   ]
 }

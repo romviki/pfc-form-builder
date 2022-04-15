@@ -1,12 +1,12 @@
 import {
-	Button,
- 	Checkbox,
-	FormControlLabel,
-	Grid,
-	Modal,
-	TextField,
-	Typography,
-} from '@mui/material'
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Grid,
+  Modal,
+  TextField,
+  Typography,
+} from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box } from '@mui/system';
@@ -15,7 +15,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { GlobalContext } from '../../context/GlobalContext';
 
 export default function DatePickerModal({ title, type, addField }) {
-	const initialInputProperties = {
+  const initialInputProperties = {
     id: uuidv4(),
     type,
     name: '',
@@ -23,70 +23,71 @@ export default function DatePickerModal({ title, type, addField }) {
     customErrorMessage: '',
   };
 
-	const [openModal, setOpenModal] = useState(false);
-	const [inputProperties, setInputProperties] = useState(initialInputProperties);
+  const [openModal, setOpenModal] = useState(false);
+  const [inputProperties, setInputProperties] = useState(
+    initialInputProperties
+  );
 
-	const { error, dispatch } = useContext(GlobalContext);
-	const [ inputNameError, setInputNameError ] = useState(false);
+  const { dispatch } = useContext(GlobalContext);
+  const [inputNameError, setInputNameError] = useState(false);
 
-	const onTextInputChange = e => {
+  const onTextInputChange = e => {
     setInputProperties(prev => ({
       ...prev,
       [e.target.id]: e.target.value,
     }));
   };
 
-	const onRequiredCheckboxChange = e => {
+  const onRequiredCheckboxChange = e => {
     setInputProperties(prev => ({
       ...prev,
       [e.target.id]: e.target.checked,
     }));
   };
 
-	const validate = () => {
-		if (!inputProperties.name) {
-			setInputNameError(true);
+  const validate = () => {
+    if (!inputProperties.name) {
+      setInputNameError(true);
       dispatch({ type: 'SET_ERROR', payload: 'Input must have a name' });
       return false;
     }
 
-		return true;
-	};
+    return true;
+  };
 
-	const onSubmit = e => {
-		e.preventDefault();
-		// reset errors
-		setInputNameError(false);
+  const onSubmit = e => {
+    e.preventDefault();
+    // reset errors
+    setInputNameError(false);
 
-		if (!validate()) return;
+    if (!validate()) return;
 
     let cleanField = cleanUp();
     addField(cleanField);
-    console.log(`ADDED - ${title} Input :>>`, cleanField);
     setInputProperties(initialInputProperties);
     setOpenModal(false);
-	};
+  };
 
-	const cleanUp = () => {
-		const tempInput = { ...inputProperties };
+  const cleanUp = () => {
+    const tempInput = { ...inputProperties };
     // Add clean up later
     !tempInput.customErrorMessage && delete tempInput.customErrorMessage;
-		return tempInput;
-	}
-	
+    return tempInput;
+  };
+
   return (
     <Box sx={{ marginBottom: 2 }}>
-			<Button variant="contained" onClick={() => setOpenModal(true)}>
+      <Button variant="contained" onClick={() => setOpenModal(true)}>
         {title}
       </Button>
 
-			<Modal
+      <Modal
         open={openModal}
         onClose={() => setOpenModal(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-				<Box
+        <Box
           sx={{
             position: 'absolute',
             top: '50%',
@@ -99,7 +100,7 @@ export default function DatePickerModal({ title, type, addField }) {
             borderRadius: '4px',
           }}
         >
-					{/* Modal title */}
+          {/* Modal title */}
           <Grid container justifyContent="space-between">
             <Typography
               id="modal-modal-title"
@@ -121,7 +122,7 @@ export default function DatePickerModal({ title, type, addField }) {
             </Box>
           </Grid>
 
-					{/* Modal content */}
+          {/* Modal content */}
           <Box
             sx={{
               display: 'flex',
@@ -130,7 +131,7 @@ export default function DatePickerModal({ title, type, addField }) {
               justifyContent: 'space-between',
             }}
           >
-						{/* Input properties form */}
+            {/* Input properties form */}
             <Typography variant="subtitle1" component="h3" marginBottom={2}>
               Properties
             </Typography>
@@ -143,23 +144,23 @@ export default function DatePickerModal({ title, type, addField }) {
               error={!!inputNameError}
               onChange={onTextInputChange}
               required
-							autoComplete='off'
+              autoComplete="off"
               sx={{ marginBottom: 2 }}
             />
 
-						<TextField
+            <TextField
               id="customErrorMessage"
               label="Custom Error Message"
               value={inputProperties.customErrorMessage}
               type="text"
               onChange={onTextInputChange}
-							autoComplete='off'
+              autoComplete="off"
               sx={{
                 marginBottom: 2,
               }}
             />
 
-						<FormControlLabel
+            <FormControlLabel
               control={
                 <Checkbox
                   id="required"
@@ -173,7 +174,7 @@ export default function DatePickerModal({ title, type, addField }) {
               }}
             />
 
-						{/* Modal submit and clear buttons */}
+            {/* Modal submit and clear buttons */}
             <Box
               sx={{
                 display: 'flex',
@@ -192,9 +193,9 @@ export default function DatePickerModal({ title, type, addField }) {
                 Clear
               </Button>
             </Box>
-					</Box>
-				</Box>
-			</Modal>
-		</Box>
-  )
+          </Box>
+        </Box>
+      </Modal>
+    </Box>
+  );
 }

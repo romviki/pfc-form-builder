@@ -1,16 +1,16 @@
 import {
-	Button,
- 	Checkbox,
-	FormControl,
-	FormControlLabel,
-	Grid,
-	Modal,
-	TextField,
-	Typography,
-	InputLabel,
-	Select,
-	MenuItem
-} from '@mui/material'
+  Button,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  Grid,
+  Modal,
+  TextField,
+  Typography,
+  InputLabel,
+  Select,
+  MenuItem,
+} from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box } from '@mui/system';
@@ -19,90 +19,91 @@ import { v4 as uuidv4 } from 'uuid';
 import { GlobalContext } from '../../context/GlobalContext';
 
 export default function TextFieldModal({ title, type, addField }) {
-	const initialInputProperties = {
+  const initialInputProperties = {
     id: uuidv4(),
     type,
-	subType: '',
+    subType: '',
     name: '',
     // minLength: 0,
-	// maxLength: 0,
-	// min: 0,
-	// max: 0,
+    // maxLength: 0,
+    // min: 0,
+    // max: 0,
     required: false,
     customErrorMessage: '',
   };
 
-	const [openModal, setOpenModal] = useState(false);
-	const [inputProperties, setInputProperties] = useState(initialInputProperties);
+  const [openModal, setOpenModal] = useState(false);
+  const [inputProperties, setInputProperties] = useState(
+    initialInputProperties
+  );
 
-	const { error, dispatch } = useContext(GlobalContext);
-	const [ inputNameError, setInputNameError ] = useState(false);
-	const [ inputSubTypeError, setInputSubTypeError ] = useState(false);
+  const { dispatch } = useContext(GlobalContext);
+  const [inputNameError, setInputNameError] = useState(false);
+  const [inputSubTypeError, setInputSubTypeError] = useState(false);
 
-	const onTextInputChange = e => {
+  const onTextInputChange = e => {
     setInputProperties(prev => ({
       ...prev,
       [e.target.id]: e.target.value,
     }));
   };
 
-	const onRequiredCheckboxChange = e => {
+  const onRequiredCheckboxChange = e => {
     setInputProperties(prev => ({
       ...prev,
       [e.target.id]: e.target.checked,
     }));
   };
 
-	const onInputTypeChange = e => {
+  const onInputTypeChange = e => {
     setInputProperties(prev => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
   };
 
-	const validateInputForm = () => {
-		let isValidated = true;
+  const validateInputForm = () => {
+    let isValidated = true;
 
-		if (!inputProperties.name) {
+    if (!inputProperties.name) {
       isValidated = false;
-			setInputNameError(true);
+      setInputNameError(true);
       dispatch({ type: 'SET_ERROR', payload: 'Input must have a name' });
     } else if (inputProperties.subType === '') {
-			isValidated = false;
-			setInputSubTypeError(true);
+      isValidated = false;
+      setInputSubTypeError(true);
       dispatch({ type: 'SET_ERROR', payload: 'Please select a sub type' });
-		}
+    }
 
-		return isValidated;
-	};
+    return isValidated;
+  };
 
-	const onSubmit = e => {
-		e.preventDefault();
-		// reset errors
-		setInputNameError(false);
-		setInputSubTypeError(false);
+  const onSubmit = e => {
+    e.preventDefault();
+    // reset errors
+    setInputNameError(false);
+    setInputSubTypeError(false);
 
-		if (validateInputForm()) {
-			let cleanedInputField = cleanInputForm();
+    if (validateInputForm()) {
+      let cleanedInputField = cleanInputForm();
       addField(cleanedInputField);
 
-      console.log(`ADDED - ${title} Input :>>`, cleanedInputField);
-			setInputProperties(initialInputProperties);
+      setInputProperties(initialInputProperties);
       setOpenModal(false);
       return;
-		}
-	};
+    }
+  };
 
-	const cleanInputForm = () => {
-		const tempInput = { ...inputProperties };
+  const cleanInputForm = () => {
+    const tempInput = { ...inputProperties };
 
-		tempInput.name && tempInput.name.trim();
+    tempInput.name && tempInput.name.trim();
     tempInput.customErrorMessage && tempInput.customErrorMessage.trim();
 
-		return tempInput;
-	}
+    return tempInput;
+  };
 
-	/*
+  /*
 	revisit later if needed
 	const validateSubType = () => {
 		let isValid = false;
@@ -138,20 +139,20 @@ export default function TextFieldModal({ title, type, addField }) {
     }));
   };
 	*/
-	
+
   return (
     <Box sx={{ marginBottom: 2 }}>
-			<Button variant="contained" onClick={() => setOpenModal(true)}>
+      <Button variant="contained" onClick={() => setOpenModal(true)}>
         {title}
       </Button>
 
-			<Modal
+      <Modal
         open={openModal}
         onClose={() => setOpenModal(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-				<Box
+        <Box
           sx={{
             position: 'absolute',
             top: '50%',
@@ -164,7 +165,7 @@ export default function TextFieldModal({ title, type, addField }) {
             borderRadius: '4px',
           }}
         >
-					{/* Modal title */}
+          {/* Modal title */}
           <Grid container justifyContent="flex-start">
             <Box>
               <IconButton
@@ -186,7 +187,7 @@ export default function TextFieldModal({ title, type, addField }) {
             </Typography>
           </Grid>
 
-					{/* Modal content */}
+          {/* Modal content */}
           <Box
             sx={{
               display: 'flex',
@@ -195,7 +196,7 @@ export default function TextFieldModal({ title, type, addField }) {
               justifyContent: 'space-between',
             }}
           >
-						{/* Input properties form */}
+            {/* Input properties form */}
             <Typography variant="subtitle1" component="h3" marginBottom={2}>
               Input Properties
             </Typography>
@@ -208,40 +209,40 @@ export default function TextFieldModal({ title, type, addField }) {
               error={!!inputNameError}
               onChange={onTextInputChange}
               required
-							autoComplete='off'
+              autoComplete="off"
               sx={{ marginBottom: 2 }}
             />
 
-						<FormControl sx={{ marginBottom: 2, }} error={!!inputSubTypeError} >
-							<InputLabel>Input Type</InputLabel>
-							<Select
-								id="subType"
-								name="subType"
-								label="Input Type"
-								value={inputProperties.subType}
-								defaultValue=''
-								required
-								onChange={onInputTypeChange}
-							>
-								<MenuItem value="text"> Text </MenuItem>
-								<MenuItem value="number"> Numeric </MenuItem>
-							</Select>
-						</FormControl>
+            <FormControl sx={{ marginBottom: 2 }} error={!!inputSubTypeError}>
+              <InputLabel>Input Type</InputLabel>
+              <Select
+                id="subType"
+                name="subType"
+                label="Input Type"
+                value={inputProperties.subType}
+                defaultValue=""
+                required
+                onChange={onInputTypeChange}
+              >
+                <MenuItem value="text"> Text </MenuItem>
+                <MenuItem value="number"> Numeric </MenuItem>
+              </Select>
+            </FormControl>
 
-						<TextField
+            <TextField
               id="customErrorMessage"
               label="Custom Error Message"
               value={inputProperties.customErrorMessage}
               type="text"
               onChange={onTextInputChange}
-							autoComplete='off'
+              autoComplete="off"
               sx={{
                 marginBottom: 2,
               }}
             />
 
-						{/* revisit if this is needed */}
-						{/* { inputProperties.subType === 'text' &&
+            {/* revisit if this is needed */}
+            {/* { inputProperties.subType === 'text' &&
 							<Box sx={{
 								display: 'flex',
 								flexDirection: 'column',
@@ -307,7 +308,7 @@ export default function TextFieldModal({ title, type, addField }) {
 							</Box>
 						} */}
 
-						<FormControlLabel
+            <FormControlLabel
               control={
                 <Checkbox
                   id="required"
@@ -321,7 +322,7 @@ export default function TextFieldModal({ title, type, addField }) {
               }}
             />
 
-						{/* Modal submit and clear buttons */}
+            {/* Modal submit and clear buttons */}
             <Box
               sx={{
                 display: 'flex',
@@ -340,9 +341,9 @@ export default function TextFieldModal({ title, type, addField }) {
                 Clear
               </Button>
             </Box>
-					</Box>
-				</Box>
-			</Modal>
-		</Box>
-  )
+          </Box>
+        </Box>
+      </Modal>
+    </Box>
+  );
 }

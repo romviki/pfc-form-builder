@@ -18,21 +18,26 @@ import EditIcon from '@mui/icons-material/Edit';
 function Dashboard() {
   const { forms, dispatch } = useContext(FormsContext);
   const { data, error } = useFetch('/api/forms', {}, true);
+  const { executeFetch } = useFetch(
+    '/api/forms',
+    {
+      method: 'DELETE',
+    },
+    false
+  );
+
   const navigate = useNavigate();
 
-  const deleteForm = form => () => {
+  const deleteForm = async form => {
     if (form._id) {
-      //event.preventDefault();
-      const url = '/api/forms/' + form._id;
       const confirmed = window.confirm('Are you sure to discard the form?');
+
       if (confirmed) {
-        fetch(url, { method: 'DELETE' })
-          .then(response => response.json())
-          .catch(e => {
-            console.log(e);
-          });
+        await executeFetch(null, form._id);
         dispatch({ type: 'DELETE_FORM', payload: form._id });
       }
+
+      return;
     }
   };
 
@@ -65,19 +70,19 @@ function Dashboard() {
           spacing={1}
           sx={{ alignItems: 'center' }}
         >
-          <IconButton aria-label="delete" onClick={deleteForm(form)}>
+          <IconButton aria-label="delete" onClick={() => deleteForm(form)}>
             <DeleteIcon />
           </IconButton>
           <IconButton
             aria-label="edit"
-            onClick={() => navigate(`./edit/${form._id}`)}
+            onClick={() => navigate(`/forms/${form._id}`)}
           >
             <EditIcon />
           </IconButton>
           <Link
             underline="none"
             component={RouterLink}
-            to={`/preview/${form._id}`}
+            to={`/forms/${form._id}`}
           >
             {form.name}
           </Link>

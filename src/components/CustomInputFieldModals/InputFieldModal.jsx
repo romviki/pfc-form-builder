@@ -99,8 +99,6 @@ function InputFieldModal({ title, type, addField }) {
       const cleanedInputField = cleanUpInputField();
       addField(cleanedInputField);
 
-      console.log(createInputForm);
-
       setCreateInputForm(initialForm);
       setOpen(false);
       return;
