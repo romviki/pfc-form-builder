@@ -1,35 +1,38 @@
-import { Box, Button, Container, Grid, Link, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Link,
+  Stack,
+  Typography,
+} from '@mui/material';
 import { useContext, useEffect } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { FormsContext } from '../context/FormsContext';
 import useFetch from '../hooks/useFetch';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-//import axios from 'axios';
+import EditIcon from '@mui/icons-material/Edit';
 
 function Dashboard() {
   const { forms, dispatch } = useContext(FormsContext);
   const { data, error } = useFetch('/api/forms', {}, true);
-  //const { dispatch: dispatchForms } = useContext(FormsContext);
+  const navigate = useNavigate();
 
   const deleteForm = form => () => {
-    if (form.id) {
-    //event.preventDefault();
-      const url = '/forms/' + form.id; 
-      const confirmed = window.confirm(
-        'Are you sure to discard the form?'
-      );
+    if (form._id) {
+      //event.preventDefault();
+      const url = '/api/forms/' + form._id;
+      const confirmed = window.confirm('Are you sure to discard the form?');
       if (confirmed) {
         fetch(url, { method: 'DELETE' })
-        .then(response => response.json())
-        .catch(e => {
-          console.log(e);
-        });
-        dispatch({ type: 'DELETE_FORM', payload: form.id });
+          .then(response => response.json())
+          .catch(e => {
+            console.log(e);
+          });
+        dispatch({ type: 'DELETE_FORM', payload: form._id });
       }
-      
-      //navigate('/');
-      return;
     }
   };
 
@@ -44,7 +47,7 @@ function Dashboard() {
 
     initialForms();
   }, [data, dispatch, error]);
-  
+
   return (
     <Container>
       <Grid container justifyContent="space-between">
@@ -53,24 +56,35 @@ function Dashboard() {
           <Button variant="contained" component={RouterLink} to="/create">
             Create
           </Button>
-        </Box> 
+        </Box>
       </Grid>
       {forms.map(form => (
-        <Box key={form.id} sx={{ flexDirection: 'row' }}>
-          <IconButton
-            aria-label="delete"
-            onClick={ deleteForm (form) }
-          >
+        <Stack
+          key={form._id}
+          direction={'row'}
+          spacing={1}
+          sx={{ alignItems: 'center' }}
+        >
+          <IconButton aria-label="delete" onClick={deleteForm(form)}>
             <DeleteIcon />
           </IconButton>
-          <Link underline="none" component={RouterLink} to={`/edit/${form.id}`}>
+          <IconButton
+            aria-label="edit"
+            onClick={() => navigate(`./edit/${form._id}`)}
+          >
+            <EditIcon />
+          </IconButton>
+          <Link
+            underline="none"
+            component={RouterLink}
+            to={`/preview/${form._id}`}
+          >
             {form.name}
           </Link>
-        </Box>
+        </Stack>
       ))}
     </Container>
   );
-
 }
 
 export default Dashboard;
