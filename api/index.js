@@ -44,7 +44,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(mongoSanitize()); // TO PREVENT MONGO INJECTION ATTACK
 
 // Routes
-app.use('/form', formRoutes);
+app.use('/forms', formRoutes);
 
 // Start server
 app.listen(PORT, () => {
