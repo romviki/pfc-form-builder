@@ -15,8 +15,6 @@ import {
 } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import DropdownInput from './CustomInputFields/DropDownInput';
-import CheckboxInput from './CustomInputFields/CheckboxInput';
 
 function FormCanvas({ fields, removeField }) {
   const switchFormControl = ({
