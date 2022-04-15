@@ -14,7 +14,7 @@ import { useContext, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { GlobalContext } from '../../context/GlobalContext';
 
-export default function RadioModal({ title, type, addField }) {
+export default function MultiChoiceModal({ title, type, addField }) {
 	const initialInputProperties = {
     id: uuidv4(),
     type,
