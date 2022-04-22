@@ -17,8 +17,9 @@
     "express": "^4.17.3",
     "express-mongo-sanitize": "^2.2.0",
     "mongoose": "^6.2.9",
-    "morgan": "^1.10.0",
-    "nodemon": "^2.0.15",
-    "pfc-form-builder": "file:.."
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }

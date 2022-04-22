@@ -1,33 +1,29 @@
+import CopyClipBoardIcon from '@mui/icons-material/ContentCopy';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import {
   Box,
   Button,
   Container,
   Grid,
   Link,
+  MenuItem,
   Stack,
   Typography,
 } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 import { useContext, useEffect } from 'react';
-import { Link as RouterLink, useNavigate, useLocation  } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import MenuButton from '../components/MenuButton';
 import { FormsContext } from '../context/FormsContext';
 import useFetch from '../hooks/useFetch';
-import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
-import CopyClipBoardIcon from '@mui/icons-material/ContentCopy';
-import EditIcon from '@mui/icons-material/Edit';
+import useShareForm from '../hooks/useShareForm';
 
 function Dashboard() {
   const { forms, dispatch } = useContext(FormsContext);
   const { data, error } = useFetch('/api/forms', {}, true);
-  const location = useLocation();
-  
-  const { executeFetch } = useFetch(
-    '/api/forms',
-    {
-      method: 'DELETE',
-    },
-    false
-  );
+  const { copyLinkToClipboard } = useShareForm();
+  const { executeFetch } = useFetch('/api/forms', { method: 'DELETE' }, false);
 
   const navigate = useNavigate();
 
@@ -44,11 +40,12 @@ function Dashboard() {
     }
   };
 
-  const copyLink = (ref) => {
-    if (ref) {  
-    navigator.clipboard.writeText(ref);
+  const shareForm = async formId => {
+    if (formId) {
+      await copyLinkToClipboard(formId);
+      window.alert('Form link copied to clipboard');
     }
-  }
+  };
 
   useEffect(() => {
     const initialForms = () => {
@@ -72,32 +69,39 @@ function Dashboard() {
           </Button>
         </Box>
       </Grid>
+
+      {/* TODO: refactor to Cards */}
       {forms.map(form => (
-        <Stack
-          key={form._id}
-          direction={'row'}
-          spacing={1}
-          sx={{ alignItems: 'center' }}
-        >
-          <IconButton aria-label="delete" onClick={() => deleteForm(form)}>
-            <DeleteIcon />
-          </IconButton>
-          <IconButton
-            aria-label="edit"
-            onClick={() => navigate(`/forms/${form._id}`)}
-          >
-            <EditIcon />
-          </IconButton>
-          <IconButton
-            aria-label="Copy Link"
-            onClick={() => copyLink(window.location.href + 'forms/' + form._id)}
-          >
-            <CopyClipBoardIcon />
-          </IconButton>
+        <Stack direction="row" alignItems="center" key={form._id}>
+          <MenuButton>
+            <MenuItem aria-label="delete" onClick={() => deleteForm(form)}>
+              <DeleteIcon />
+            </MenuItem>
+
+            <MenuItem
+              sx={{ minWidth: 'unset' }}
+              size="small"
+              aria-label="edit"
+              onClick={() => navigate(`/forms/${form._id}`)}
+            >
+              <EditIcon />
+            </MenuItem>
+
+            <MenuItem
+              sx={{ minWidth: 'unset' }}
+              size="small"
+              aria-label="Copy Link"
+              onClick={() => shareForm(form._id)}
+            >
+              <CopyClipBoardIcon />
+            </MenuItem>
+          </MenuButton>
+
           <Link
             underline="none"
             component={RouterLink}
             to={`/forms/${form._id}`}
+            fontSize="18px"
           >
             {form.name}
           </Link>

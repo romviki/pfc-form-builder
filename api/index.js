@@ -42,7 +42,6 @@ app.use(cors());
 app.use(logger('dev'));
 app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ extended: false }));
-// app.use(express.static(__dirname + '/'));
 
 // Mongo sanitizer
 app.use(mongoSanitize()); // TO PREVENT MONGO INJECTION ATTACK
