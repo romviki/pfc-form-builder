@@ -8,16 +8,19 @@ import {
   Typography,
 } from '@mui/material';
 import { useContext, useEffect } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate, useLocation  } from 'react-router-dom';
 import { FormsContext } from '../context/FormsContext';
 import useFetch from '../hooks/useFetch';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import CopyClipBoardIcon from '@mui/icons-material/ContentCopy';
 import EditIcon from '@mui/icons-material/Edit';
 
 function Dashboard() {
   const { forms, dispatch } = useContext(FormsContext);
   const { data, error } = useFetch('/api/forms', {}, true);
+  const location = useLocation();
+  
   const { executeFetch } = useFetch(
     '/api/forms',
     {
@@ -40,6 +43,12 @@ function Dashboard() {
       return;
     }
   };
+
+  const copyLink = (ref) => {
+    if (ref) {  
+    navigator.clipboard.writeText(ref);
+    }
+  }
 
   useEffect(() => {
     const initialForms = () => {
@@ -78,6 +87,12 @@ function Dashboard() {
             onClick={() => navigate(`/forms/${form._id}`)}
           >
             <EditIcon />
+          </IconButton>
+          <IconButton
+            aria-label="Copy Link"
+            onClick={() => copyLink(window.location.href + 'forms/' + form._id)}
+          >
+            <CopyClipBoardIcon />
           </IconButton>
           <Link
             underline="none"

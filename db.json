@@ -51,6 +51,32 @@
       "id": "a772b564-af65-4fe0-a9e8-28355e29b34c",
       "name": "testtest",
       "fields": []
+    },
+    {
+      "_id": "a2fc39fe-93e9-41d4-b13a-3973b86e4e23",
+      "name": "vika",
+      "fields": [
+        {
+          "id": "48c29334-4a00-44f5-8256-c6385b54559a",
+          "type": "text",
+          "subType": "text",
+          "name": "xfgcgfhf",
+          "required": false,
+          "customErrorMessage": ""
+        },
+        {
+          "id": "c3242bb0-4ce2-49db-8149-ab7ea7347e47",
+          "type": "checkbox",
+          "name": "hjghuiy",
+          "options": [
+            "1",
+            "2"
+          ],
+          "required": false,
+          "customErrorMessage": "fgdfghfg"
+        }
+      ],
+      "id": "z0VO1wm"
     }
   ]
 }
